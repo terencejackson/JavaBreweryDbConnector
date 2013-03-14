@@ -1,0 +1,114 @@
+
+package com.sosv.breweryDB.connector.entity.beer;
+
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class Beer{
+   	private String abv;
+   	private Available available;
+   	private Number availableId;
+   	private String createDate;
+   	private String description;
+   	private Glass glass;
+   	private Number glasswareId;
+   	private String id;
+   	private String isOrganic;
+   	private String name;
+   	private String status;
+   	private String statusDisplay;
+   	private Style style;
+   	private Number styleId;
+   	private String updateDate;
+
+ 	public String getAbv(){
+		return this.abv;
+	}
+	public void setAbv(String abv){
+		this.abv = abv;
+	}
+ 	public Available getAvailable(){
+		return this.available;
+	}
+	public void setAvailable(Available available){
+		this.available = available;
+	}
+ 	public Number getAvailableId(){
+		return this.availableId;
+	}
+	public void setAvailableId(Number availableId){
+		this.availableId = availableId;
+	}
+ 	public String getCreateDate(){
+		return this.createDate;
+	}
+	public void setCreateDate(String createDate){
+		this.createDate = createDate;
+	}
+ 	public String getDescription(){
+		return this.description;
+	}
+	public void setDescription(String description){
+		this.description = description;
+	}
+ 	public Glass getGlass(){
+		return this.glass;
+	}
+	public void setGlass(Glass glass){
+		this.glass = glass;
+	}
+ 	public Number getGlasswareId(){
+		return this.glasswareId;
+	}
+	public void setGlasswareId(Number glasswareId){
+		this.glasswareId = glasswareId;
+	}
+ 	public String getId(){
+		return this.id;
+	}
+	public void setId(String id){
+		this.id = id;
+	}
+ 	public String getIsOrganic(){
+		return this.isOrganic;
+	}
+	public void setIsOrganic(String isOrganic){
+		this.isOrganic = isOrganic;
+	}
+ 	public String getName(){
+		return this.name;
+	}
+	public void setName(String name){
+		this.name = name;
+	}
+ 	public String getStatus(){
+		return this.status;
+	}
+	public void setStatus(String status){
+		this.status = status;
+	}
+ 	public String getStatusDisplay(){
+		return this.statusDisplay;
+	}
+	public void setStatusDisplay(String statusDisplay){
+		this.statusDisplay = statusDisplay;
+	}
+ 	public Style getStyle(){
+		return this.style;
+	}
+	public void setStyle(Style style){
+		this.style = style;
+	}
+ 	public Number getStyleId(){
+		return this.styleId;
+	}
+	public void setStyleId(Number styleId){
+		this.styleId = styleId;
+	}
+ 	public String getUpdateDate(){
+		return this.updateDate;
+	}
+	public void setUpdateDate(String updateDate){
+		this.updateDate = updateDate;
+	}
+}
