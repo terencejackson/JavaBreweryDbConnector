@@ -42,5 +42,18 @@ public class BeerResourceTests {
 		assertEquals(1, result.getCurrentPage());
 		assertNotNull(result.getData());
 	}
+	
+	@Test
+	public void testGetPage2() throws IOException {
+		Properties prop = new Properties();
+		InputStream stream = getClass().getResourceAsStream("/configuration.properties");
+		prop.load(stream);
+		IBreweryDBConnectorConfiguration configuration = mock(IBreweryDBConnectorConfiguration.class);
+		when(configuration.getApiKey()).thenReturn((String) prop.get("apiKey"));
+		IBeerResource br = new BeerResource(configuration);
+		Page result = br.getBeers(2);
+		assertEquals(2, result.getCurrentPage());
+		assertNotNull(result.getData());
+	}
 
 }

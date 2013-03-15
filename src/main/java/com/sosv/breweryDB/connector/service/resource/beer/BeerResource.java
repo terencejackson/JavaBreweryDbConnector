@@ -15,15 +15,19 @@ limitations under the License.
  */
 package com.sosv.breweryDB.connector.service.resource.beer;
 
+import javax.ws.rs.core.MultivaluedMap;
+
 import com.google.inject.Inject;
 import com.sosv.breweryDB.connector.configuration.IBreweryDBConnectorConfiguration;
 import com.sosv.breweryDB.connector.entity.beer.Page;
 import com.sosv.breweryDB.connector.service.resource.AbstractResource;
+import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 /**
  * Implementation for the beer resource services
+ * 
  * @author Sven
- *
+ * 
  */
 public class BeerResource extends AbstractResource implements IBeerResource {
 
@@ -34,10 +38,21 @@ public class BeerResource extends AbstractResource implements IBeerResource {
 
 	/*
 	 * (non-Javadoc)
-	 * @see com.sosv.breweryDB.connector.service.resource.beer.IBeerResource#getBeers(java.lang.Integer)
+	 * 
+	 * @see
+	 * com.sosv.breweryDB.connector.service.resource.beer.IBeerResource#getBeers
+	 * (java.lang.Integer)
 	 */
 	public Page getBeers(Integer currentPage) {
-		return get(new Page());
+		Page result = null;
+		if (currentPage == null) {
+			result = get(new Page());
+		} else {
+			MultivaluedMap<String, String> map = new MultivaluedMapImpl();
+			map.add("p", currentPage.toString());
+			result = get(map, new Page());
+		}
+		return result;
 	}
 
 }

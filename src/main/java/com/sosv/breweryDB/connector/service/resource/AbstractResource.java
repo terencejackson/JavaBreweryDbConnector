@@ -64,8 +64,30 @@ public abstract class AbstractResource {
 		this.apiKey = configuration.getApiKey();
 	}
 	
+	/**
+	 * Do a get operation to the resource with the given T as result
+	 * @param type
+	 * @return
+	 */
 	public <T> T get(T type){
 		MultivaluedMap<String, String> map = new MultivaluedMapImpl();
+		map.add("key", apiKey);
+		
+		/**
+		 * Possible risk if T is not the response object. If not it is thrown a not deserializable exception
+		 */
+		@SuppressWarnings("unchecked")
+		T result = (T) webResource.queryParams(map).get(type.getClass());
+		return result;
+	}
+	
+	/**
+	 * Do a get operation with query params to the resource with the given T as result
+	 * @param map
+	 * @param type
+	 * @return
+	 */
+	public <T> T get(MultivaluedMap<String, String> map, T type){
 		map.add("key", apiKey);
 		
 		/**
