@@ -17,14 +17,11 @@ package com.sosv.breweryDB.connector.service.resource;
 
 import javax.ws.rs.core.MultivaluedMap;
 
-import com.google.inject.Inject;
 import com.sosv.breweryDB.connector.configuration.IBreweryDBConnectorConfiguration;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
-import com.sun.jersey.api.json.JSONConfiguration;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
+
 /**
  * Base class for all resources
  * 
@@ -38,6 +35,7 @@ public abstract class AbstractResource {
 
 	/**
 	 * Getter for the api key
+	 * 
 	 * @return
 	 */
 	protected String getApiKey() {
@@ -46,55 +44,75 @@ public abstract class AbstractResource {
 
 	/**
 	 * Getter for the {@link WebResource}
+	 * 
 	 * @return
 	 */
 	protected WebResource getWebResource() {
 		return webResource;
 	}
 
-	@Inject
-	public AbstractResource(IBreweryDBConnectorConfiguration configuration, String endpoint) {
+	public AbstractResource(IBreweryDBConnectorConfiguration configuration,
+			Client client) {
 		super();
-		ClientConfig clientConfig = new DefaultClientConfig();
-		clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
-		Client client = Client.create(clientConfig);
 
-		webResource = client
-				.resource("http://api.brewerydb.com/v2/" + endpoint);
+		webResource = client.resource("http://api.brewerydb.com/v2/");
 		this.apiKey = configuration.getApiKey();
 	}
-	
+
 	/**
 	 * Do a get operation to the resource with the given T as result
+	 * 
 	 * @param type
 	 * @return
 	 */
-	public <T> T get(T type){
+	public <T> T get(String path, T type) {
+		MultivaluedMap<String, String> map = new MultivaluedMapImpl();
+		map.add("key", apiKey);
+
+		/**
+		 * Possible risk if T is not the response object. If not it is thrown a
+		 * not deserializable exception
+		 */
+		@SuppressWarnings("unchecked")
+		T result = (T) webResource.path(path).queryParams(map)
+				.get(type.getClass());
+		return result;
+	}
+	
+	public <T> T get(T type) {
 		MultivaluedMap<String, String> map = new MultivaluedMapImpl();
 		map.add("key", apiKey);
 		
 		/**
-		 * Possible risk if T is not the response object. If not it is thrown a not deserializable exception
+		 * Possible risk if T is not the response object. If not it is thrown a
+		 * not deserializable exception
 		 */
 		@SuppressWarnings("unchecked")
-		T result = (T) webResource.queryParams(map).get(type.getClass());
+		T result = (T) webResource.queryParams(map)
+		.get(type.getClass());
 		return result;
 	}
 	
+	
+
 	/**
-	 * Do a get operation with query params to the resource with the given T as result
+	 * Do a get operation with query params to the resource with the given T as
+	 * result
+	 * 
 	 * @param map
 	 * @param type
 	 * @return
 	 */
-	public <T> T get(MultivaluedMap<String, String> map, T type){
+	public <T> T get(String path, MultivaluedMap<String, String> map, T type) {
 		map.add("key", apiKey);
-		
+
 		/**
-		 * Possible risk if T is not the response object. If not it is thrown a not deserializable exception
+		 * Possible risk if T is not the response object. If not it is thrown a
+		 * not deserializable exception
 		 */
 		@SuppressWarnings("unchecked")
-		T result = (T) webResource.queryParams(map).get(type.getClass());
+		T result = (T) webResource.path(path).queryParams(map)
+				.get(type.getClass());
 		return result;
 	}
 

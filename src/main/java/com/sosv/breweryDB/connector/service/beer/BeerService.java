@@ -15,24 +15,57 @@ limitations under the License.
  */
 package com.sosv.breweryDB.connector.service.beer;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import com.sosv.breweryDB.connector.entity.beer.Beer;
+import com.sosv.breweryDB.connector.entity.beer.Page;
 import com.sosv.breweryDB.connector.service.resource.beer.IBeerResource;
 
 /**
  * Implementation of the beer service
+ * 
  * @author Sven
- *
+ * 
  */
 public class BeerService implements IBeerService {
 
-	public BeerService(IBeerResource beerResource){
-		
+	private IBeerResource beerResource;
+
+	public BeerService(IBeerResource beerResource) {
+		this.beerResource = beerResource;
 	}
 	
+	@Override
+	public Page getPagesBeers(Number pageNumber){
+		Page page = this.beerResource.getBeers(pageNumber);
+		return page;
+	}
+
+	@Override
 	public Collection<Beer> getAll() {
-		return null;
+		// A set would be faster but we take a list here because of sorting
+		// functionality in future releases
+		List<Beer> beers = new ArrayList<Beer>();
+		Page firstPage = this.beerResource.getBeers(null);
+
+		beers.addAll(handlePage(firstPage));
+
+		return beers;
+	}
+
+	private List<? extends Beer> handlePage(Page page) {
+		List<Beer> beers = page.getData();
+		if (beers == null || beers.isEmpty()) {
+			beers = new ArrayList<Beer>();
+		}
+		Number currentPage = page.getCurrentPage();
+		if (currentPage != page.getNumberOfPages()) {
+			beers.addAll(handlePage(this.beerResource.getBeers(currentPage.intValue() + 1)));
+		}
+
+		return beers;
 	}
 
 }

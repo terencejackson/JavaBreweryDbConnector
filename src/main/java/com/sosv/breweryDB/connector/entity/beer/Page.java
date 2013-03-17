@@ -6,7 +6,7 @@ import java.util.List;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Page{
+public class Page {
    	private Number currentPage;
    	private List<Beer> data;
    	private Number numberOfPages;

@@ -1,24 +1,56 @@
 
 package com.sosv.breweryDB.connector.entity.beer;
 
+import javax.xml.bind.annotation.XmlElement;
+
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Beer{
+	
+	@XmlElement
    	private String abv;
+	
+	@XmlElement
    	private Available available;
+	
+	@XmlElement
    	private Number availableId;
+	
+	@XmlElement
    	private String createDate;
+	
+	@XmlElement
    	private String description;
+	
+	@XmlElement
    	private Glass glass;
+	
+	@XmlElement
    	private Number glasswareId;
+	
+	@XmlElement
    	private String id;
+	
+	@XmlElement
    	private String isOrganic;
+	
+	@XmlElement
    	private String name;
+	
+	@XmlElement
    	private String status;
+	
+	@XmlElement
    	private String statusDisplay;
+	
+	@XmlElement
    	private Style style;
+	
+	@XmlElement
    	private Number styleId;
+	
+	@XmlElement
    	private String updateDate;
 
  	public String getAbv(){

@@ -17,7 +17,10 @@ package com.sosv.breweryDB.connector.service;
 
 import java.util.Collection;
 
+import com.google.inject.Inject;
 import com.sosv.breweryDB.connector.entity.beer.Beer;
+import com.sosv.breweryDB.connector.entity.beer.Page;
+import com.sosv.breweryDB.connector.service.beer.IBeerService;
 
 /**
  * The service to get the data of the breweryDB service
@@ -26,12 +29,34 @@ import com.sosv.breweryDB.connector.entity.beer.Beer;
  */
 public class BreweryDBService implements IBreweryDBService{
 
+	private IBeerService beerService;
+
+	/**
+	 * C'tor
+	 * @param beerService The beer service which is used to retrieve the beer data
+	 */
+	@Inject
+	public BreweryDBService(IBeerService beerService) {
+		super();
+		this.beerService = beerService;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * @see com.sosv.breweryDB.connector.client.interfaces.beer.IBeerService#getAll()
 	 */
+	@Override
 	public Collection<Beer> getAll() {
-		return null;
+		return beerService.getAll();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see com.sosv.breweryDB.connector.service.beer.IBeerService#getPagesBeers(java.lang.Number)
+	 */
+	@Override
+	public Page getPagesBeers(Number pageNumber) {
+		return beerService.getPagesBeers(pageNumber);
 	}
 
 }

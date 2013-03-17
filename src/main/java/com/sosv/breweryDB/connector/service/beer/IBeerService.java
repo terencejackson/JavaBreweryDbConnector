@@ -18,18 +18,31 @@ package com.sosv.breweryDB.connector.service.beer;
 import java.util.Collection;
 
 import com.sosv.breweryDB.connector.entity.beer.Beer;
+import com.sosv.breweryDB.connector.entity.beer.Page;
 
 /**
  * Interface for the services for beers
+ * 
  * @author Sven
- *
+ * 
  */
 public interface IBeerService {
 
 	/**
-	 * Get all beers (really all! Pages are gone through to get all beers in one list!)
-	 * This is a premium function
+	 * Get all beers (really all! Pages are gone through to get all beers in one
+	 * list!) This is a premium function
+	 * 
 	 * @return
 	 */
 	Collection<Beer> getAll();
+
+	/**
+	 * Get beers for a page. You can get the amount of pages with
+	 * {@link Page#getNumberOfPages()} and the current page with
+	 * {@link Page#getCurrentPage()}. If you want the first page you can use null as parameter
+	 * 
+	 * @param pageNumber The number of the page. First page can be retrieved with null.
+	 * @return The {@link Page}
+	 */
+	Page getPagesBeers(Number pageNumber);
 }
