@@ -15,18 +15,22 @@ limitations under the License.
  */
 package com.sosv.breweryDB.connector.service.resource.beer;
 
+import java.util.List;
+
 import javax.ws.rs.core.MultivaluedMap;
 
 import com.google.inject.Inject;
 import com.sosv.breweryDB.connector.configuration.IBreweryDBConnectorConfiguration;
 import com.sosv.breweryDB.connector.entity.beer.Beer;
 import com.sosv.breweryDB.connector.entity.beer.BeerResult;
+import com.sosv.breweryDB.connector.entity.beer.IErrorResult;
 import com.sosv.breweryDB.connector.entity.beer.Page;
 import com.sosv.breweryDB.connector.service.ErrorCodes;
 import com.sosv.breweryDB.connector.service.Status;
 import com.sosv.breweryDB.connector.service.exceptions.ApiKeyNotFoundExeption;
 import com.sosv.breweryDB.connector.service.exceptions.ObjectNotFoundException;
 import com.sosv.breweryDB.connector.service.resource.AbstractResource;
+import com.sosv.breweryDB.connector.service.resource.filter.IBeerFilter;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 
@@ -86,13 +90,28 @@ public class BeerResource extends AbstractResource implements IBeerResource {
 				+ " unknown");
 	}
 
+	@Override
+	public List<Beer> getBeersByFilter(IBeerFilter filter)
+			throws ApiKeyNotFoundExeption {
+		MultivaluedMap<String, String> map = new BeerFilterMultivalueMapBuilder().convert(filter);
+		Page result = get("beers/", map, new Page());
+		if (Status.SUCCESS.asString().equals(result.getStatus())) {
+			return result.getData();
+		}
+		throw new UnsupportedOperationException("Result " + result.getErrorMessage()
+				+ " unknown");
+	}
+
 	/**
 	 * Handle the result and determine the error of the result
+	 * 
 	 * @param result
-	 * @throws ApiKeyNotFoundExeption If the api key is not found by the service
-	 * @throws ObjectNotFoundException If the object was not found
+	 * @throws ApiKeyNotFoundExeption
+	 *             If the api key is not found by the service
+	 * @throws ObjectNotFoundException
+	 *             If the object was not found
 	 */
-	private void handleErrorResult(BeerResult result)
+	private void handleErrorResult(IErrorResult result)
 			throws ApiKeyNotFoundExeption, ObjectNotFoundException {
 		if (ErrorCodes.API_KEY_NOT_FOUND.getMessage().equals(
 				result.getErrorMessage())) {

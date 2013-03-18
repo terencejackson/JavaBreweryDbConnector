@@ -15,9 +15,12 @@ limitations under the License.
  */
 package com.sosv.breweryDB.connector.service.resource.beer;
 
+import java.util.List;
+
 import com.sosv.breweryDB.connector.entity.beer.Beer;
 import com.sosv.breweryDB.connector.entity.beer.Page;
 import com.sosv.breweryDB.connector.service.exceptions.ApiKeyNotFoundExeption;
+import com.sosv.breweryDB.connector.service.resource.filter.IBeerFilter;
 
 /**
  * Interface for the beer resource
@@ -37,7 +40,15 @@ public interface IBeerResource {
 	 * Get a beer by its id
 	 * @param id
 	 * @return The found {@link Beer}
-	 * @throws ApiKeyNotFoundExeption 
+	 * @throws ApiKeyNotFoundExeption If the provided api key was not found by brewery db
 	 */
 	Beer getBeerById(String id) throws ApiKeyNotFoundExeption;
+	
+	/**
+	 * Get beers with a custom filter
+	 * @param filter The filter to apply
+	 * @return The result list of beers or null
+	 * @throws ApiKeyNotFoundExeption If the provided api key was not found by brewery db
+	 */
+	List<Beer> getBeersByFilter(IBeerFilter filter) throws ApiKeyNotFoundExeption;
 }

@@ -6,12 +6,13 @@ import java.util.List;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Page {
+public class Page implements IErrorResult {
    	private Number currentPage;
    	private List<Beer> data;
    	private Number numberOfPages;
    	private String status;
    	private Number totalResults;
+	private String errorMessage;
 
  	public Number getCurrentPage(){
 		return this.currentPage;
@@ -42,5 +43,13 @@ public class Page {
 	}
 	public void setTotalResults(Number totalResults){
 		this.totalResults = totalResults;
+	}
+	
+	@Override
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
 	}
 }
