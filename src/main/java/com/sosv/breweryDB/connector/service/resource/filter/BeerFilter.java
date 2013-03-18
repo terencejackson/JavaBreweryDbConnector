@@ -2,9 +2,9 @@ package com.sosv.breweryDB.connector.service.resource.filter;
 
 import java.util.Collection;
 
-import com.sosv.breweryDB.connector.entity.beer.Available;
-import com.sosv.breweryDB.connector.entity.beer.Glass;
-import com.sosv.breweryDB.connector.entity.beer.Style;
+import com.sosv.breweryDB.connector.entity.Available;
+import com.sosv.breweryDB.connector.entity.Glass;
+import com.sosv.breweryDB.connector.entity.Style;
 
 /**
  * Implementation of the {@link IBeerFilter} interface with some comfort
@@ -190,6 +190,17 @@ public class BeerFilter implements IBeerFilter {
 	public static BeerFilter createSortFilter(Sorting sorting) {
 		BeerFilter bf = new BeerFilter();
 		bf.setSort(sorting);
+		return bf;
+	}
+
+	/**
+	 * Create a with breweries filter
+	 * @param withBreweries
+	 * @return
+	 */
+	public static IBeerFilter createWithBreweriesFilter(boolean withBreweries) {
+		BeerFilter bf = new BeerFilter();
+		bf.setWithBreweries(withBreweries);
 		return bf;
 	}
 

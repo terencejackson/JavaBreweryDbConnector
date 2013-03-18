@@ -15,16 +15,14 @@ limitations under the License.
  */
 package com.sosv.breweryDB.connector.service.resource.beer;
 
-import java.util.List;
-
 import javax.ws.rs.core.MultivaluedMap;
 
 import com.google.inject.Inject;
 import com.sosv.breweryDB.connector.configuration.IBreweryDBConnectorConfiguration;
-import com.sosv.breweryDB.connector.entity.beer.Beer;
-import com.sosv.breweryDB.connector.entity.beer.BeerResult;
-import com.sosv.breweryDB.connector.entity.beer.IErrorResult;
-import com.sosv.breweryDB.connector.entity.beer.Page;
+import com.sosv.breweryDB.connector.entity.Beer;
+import com.sosv.breweryDB.connector.entity.BeerResult;
+import com.sosv.breweryDB.connector.entity.IErrorResult;
+import com.sosv.breweryDB.connector.entity.Page;
 import com.sosv.breweryDB.connector.service.ErrorCodes;
 import com.sosv.breweryDB.connector.service.Status;
 import com.sosv.breweryDB.connector.service.exceptions.ApiKeyNotFoundExeption;
@@ -32,7 +30,6 @@ import com.sosv.breweryDB.connector.service.exceptions.ObjectNotFoundException;
 import com.sosv.breweryDB.connector.service.resource.AbstractResource;
 import com.sosv.breweryDB.connector.service.resource.filter.IBeerFilter;
 import com.sun.jersey.api.client.Client;
-import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 /**
  * Implementation for the beer resource services
@@ -55,16 +52,26 @@ public class BeerResource extends AbstractResource implements IBeerResource {
 	 * com.sosv.breweryDB.connector.service.resource.beer.IBeerResource#getBeers
 	 * (java.lang.Integer)
 	 */
-	public Page getBeers(Number currentPage) {
+	public Page getBeers(Number currentPage, IBeerFilter filter) throws ApiKeyNotFoundExeption {
+		MultivaluedMap<String, String> map = new BeerFilterMultivalueMapBuilder()
+				.convert(filter);
 		Page result = null;
-		if (currentPage == null) {
-			result = get("beers/", new Page());
-		} else {
-			MultivaluedMap<String, String> map = new MultivaluedMapImpl();
+		if (currentPage != null) {
 			map.add("p", currentPage.toString());
-			result = get("beers/", map, new Page());
 		}
-		return result;
+		result = get("beers/", map, new Page());
+		
+		if (Status.SUCCESS.asString().equals(result.getStatus())) {
+			return result;
+		}
+		try {
+			handleErrorResult(result);
+		} catch (ObjectNotFoundException e) {
+			// Object not found => return null
+			return null;
+		}
+		throw new UnsupportedOperationException("Result "
+				+ result.getErrorMessage() + " unknown");
 	}
 
 	/*
@@ -87,18 +94,6 @@ public class BeerResource extends AbstractResource implements IBeerResource {
 			return null;
 		}
 		throw new UnsupportedOperationException("Result " + result.getMessage()
-				+ " unknown");
-	}
-
-	@Override
-	public List<Beer> getBeersByFilter(IBeerFilter filter)
-			throws ApiKeyNotFoundExeption {
-		MultivaluedMap<String, String> map = new BeerFilterMultivalueMapBuilder().convert(filter);
-		Page result = get("beers/", map, new Page());
-		if (Status.SUCCESS.asString().equals(result.getStatus())) {
-			return result.getData();
-		}
-		throw new UnsupportedOperationException("Result " + result.getErrorMessage()
 				+ " unknown");
 	}
 

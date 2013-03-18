@@ -2,9 +2,9 @@ package com.sosv.breweryDB.connector.service.resource.filter;
 
 import java.util.Collection;
 
-import com.sosv.breweryDB.connector.entity.beer.Available;
-import com.sosv.breweryDB.connector.entity.beer.Glass;
-import com.sosv.breweryDB.connector.entity.beer.Style;
+import com.sosv.breweryDB.connector.entity.Available;
+import com.sosv.breweryDB.connector.entity.Glass;
+import com.sosv.breweryDB.connector.entity.Style;
 
 /**
  * Filter criterias for a beer request

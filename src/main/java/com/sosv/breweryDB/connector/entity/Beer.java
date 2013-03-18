@@ -1,5 +1,7 @@
 
-package com.sosv.breweryDB.connector.entity.beer;
+package com.sosv.breweryDB.connector.entity;
+
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
 
@@ -52,8 +54,19 @@ public class Beer{
 	
 	@XmlElement
    	private String updateDate;
+	
+	@XmlElement
+	private List<Brewery> breweries;
 
- 	public String getAbv(){
+ 	public List<Brewery> getBreweries() {
+		return breweries;
+	}
+ 	
+	public void setBreweries(List<Brewery> breweries) {
+		this.breweries = breweries;
+	}
+	
+	public String getAbv(){
 		return this.abv;
 	}
 	public void setAbv(String abv){

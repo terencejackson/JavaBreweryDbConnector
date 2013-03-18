@@ -15,12 +15,14 @@ limitations under the License.
  */
 package com.sosv.breweryDB.connector.service;
 
-import java.util.Collection;
+import java.util.List;
 
 import com.google.inject.Inject;
-import com.sosv.breweryDB.connector.entity.beer.Beer;
-import com.sosv.breweryDB.connector.entity.beer.Page;
+import com.sosv.breweryDB.connector.entity.Beer;
+import com.sosv.breweryDB.connector.entity.Page;
 import com.sosv.breweryDB.connector.service.beer.IBeerService;
+import com.sosv.breweryDB.connector.service.exceptions.ApiKeyNotFoundExeption;
+import com.sosv.breweryDB.connector.service.resource.filter.IBeerFilter;
 
 /**
  * The service to get the data of the breweryDB service
@@ -41,22 +43,31 @@ public class BreweryDBService implements IBreweryDBService{
 		this.beerService = beerService;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see com.sosv.breweryDB.connector.client.interfaces.beer.IBeerService#getAll()
-	 */
-	@Override
-	public Collection<Beer> getAll() {
-		return beerService.getAll();
-	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see com.sosv.breweryDB.connector.service.beer.IBeerService#getPagesBeers(java.lang.Number)
 	 */
 	@Override
-	public Page getPagesBeers(Number pageNumber) {
+	public Page getPagesBeers(Number pageNumber) throws ApiKeyNotFoundExeption {
 		return beerService.getPagesBeers(pageNumber);
+	}
+
+	@Override
+	public List<Beer> getAll(IBeerFilter beerFilter)
+			throws ApiKeyNotFoundExeption {
+		return beerService.getAll();
+	}
+
+	@Override
+	public Page getPagesBeers(Number pageNumber, IBeerFilter beerFilter) throws ApiKeyNotFoundExeption {
+		return beerService.getPagesBeers(pageNumber, beerFilter);
+	}
+
+
+	@Override
+	public List<Beer> getAll() throws ApiKeyNotFoundExeption {
+		return beerService.getAll();
 	}
 
 }

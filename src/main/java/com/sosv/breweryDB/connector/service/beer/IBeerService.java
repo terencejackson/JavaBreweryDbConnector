@@ -15,10 +15,12 @@ limitations under the License.
  */
 package com.sosv.breweryDB.connector.service.beer;
 
-import java.util.Collection;
+import java.util.List;
 
-import com.sosv.breweryDB.connector.entity.beer.Beer;
-import com.sosv.breweryDB.connector.entity.beer.Page;
+import com.sosv.breweryDB.connector.entity.Beer;
+import com.sosv.breweryDB.connector.entity.Page;
+import com.sosv.breweryDB.connector.service.exceptions.ApiKeyNotFoundExeption;
+import com.sosv.breweryDB.connector.service.resource.filter.IBeerFilter;
 
 /**
  * Interface for the services for beers
@@ -33,16 +35,43 @@ public interface IBeerService {
 	 * list!) This is a premium function
 	 * 
 	 * @return
+	 * @throws ApiKeyNotFoundExeption 
 	 */
-	Collection<Beer> getAll();
+	List<Beer> getAll() throws ApiKeyNotFoundExeption;
 
 	/**
 	 * Get beers for a page. You can get the amount of pages with
 	 * {@link Page#getNumberOfPages()} and the current page with
-	 * {@link Page#getCurrentPage()}. If you want the first page you can use null as parameter
+	 * {@link Page#getCurrentPage()}. If you want the first page you can use
+	 * null as parameter
 	 * 
-	 * @param pageNumber The number of the page. First page can be retrieved with null.
+	 * @param pageNumber
+	 *            The number of the page. First page can be retrieved with null.
 	 * @return The {@link Page}
+	 * @throws ApiKeyNotFoundExeption 
 	 */
-	Page getPagesBeers(Number pageNumber);
+	Page getPagesBeers(Number pageNumber) throws ApiKeyNotFoundExeption;
+
+	/**
+	 * Get all beers with a filter applied
+	 * 
+	 * @param beerFilter
+	 *            The filter to apply
+	 * @return All beers which apply to the filter
+	 * @throws ApiKeyNotFoundExeption 
+	 */
+	List<Beer> getAll(IBeerFilter beerFilter) throws ApiKeyNotFoundExeption;
+
+	/**
+	 * Get beers for specific filter. The page indicates the number of the page
+	 * requested
+	 * 
+	 * @param beerFilter
+	 *            The filter to apply
+	 * @param pageNumber
+	 *            The page number => for page 1 provide NULL
+	 * @return The {@link Page}
+	 * @throws ApiKeyNotFoundExeption 
+	 */
+	Page getPagesBeers(Number pageNumber, IBeerFilter beerFilter) throws ApiKeyNotFoundExeption;
 }

@@ -16,12 +16,13 @@ limitations under the License.
 package com.sosv.breweryDB.connector.service.beer;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
-import com.sosv.breweryDB.connector.entity.beer.Beer;
-import com.sosv.breweryDB.connector.entity.beer.Page;
+import com.sosv.breweryDB.connector.entity.Beer;
+import com.sosv.breweryDB.connector.entity.Page;
+import com.sosv.breweryDB.connector.service.exceptions.ApiKeyNotFoundExeption;
 import com.sosv.breweryDB.connector.service.resource.beer.IBeerResource;
+import com.sosv.breweryDB.connector.service.resource.filter.IBeerFilter;
 
 /**
  * Implementation of the beer service
@@ -36,36 +37,48 @@ public class BeerService implements IBeerService {
 	public BeerService(IBeerResource beerResource) {
 		this.beerResource = beerResource;
 	}
-	
+
 	@Override
-	public Page getPagesBeers(Number pageNumber){
-		Page page = this.beerResource.getBeers(pageNumber);
+	public Page getPagesBeers(Number pageNumber) throws ApiKeyNotFoundExeption {
+		Page page = this.beerResource.getBeers(pageNumber, null);
 		return page;
 	}
 
 	@Override
-	public Collection<Beer> getAll() {
-		// A set would be faster but we take a list here because of sorting
-		// functionality in future releases
-		List<Beer> beers = new ArrayList<Beer>();
-		Page firstPage = this.beerResource.getBeers(null);
-
-		beers.addAll(handlePage(firstPage));
-
-		return beers;
+	public List<Beer> getAll() throws ApiKeyNotFoundExeption {
+		return getAll(null);
 	}
 
-	private List<? extends Beer> handlePage(Page page) {
+	private List<? extends Beer> handlePage(Page page, IBeerFilter filter) throws ApiKeyNotFoundExeption {
 		List<Beer> beers = page.getData();
 		if (beers == null || beers.isEmpty()) {
 			beers = new ArrayList<Beer>();
 		}
 		Number currentPage = page.getCurrentPage();
 		if (currentPage != page.getNumberOfPages()) {
-			beers.addAll(handlePage(this.beerResource.getBeers(currentPage.intValue() + 1)));
+			beers.addAll(handlePage(this.beerResource.getBeers(
+					currentPage.intValue() + 1, filter), filter));
 		}
 
 		return beers;
+	}
+
+	@Override
+	public List<Beer> getAll(IBeerFilter beerFilter)
+			throws ApiKeyNotFoundExeption {
+		// A set would be faster but we take a list here because of sorting
+		// functionality in future releases
+		List<Beer> beers = new ArrayList<Beer>();
+		Page firstPage = this.beerResource.getBeers(null, beerFilter);
+
+		beers.addAll(handlePage(firstPage, beerFilter));
+
+		return beers;
+	}
+
+	@Override
+	public Page getPagesBeers(Number pageNumber, IBeerFilter beerFilter) throws ApiKeyNotFoundExeption {
+		return beerResource.getBeers(pageNumber, beerFilter);
 	}
 
 }

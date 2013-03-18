@@ -1,4 +1,4 @@
-package com.sosv.breweryDB.connector.entity.beer;
+package com.sosv.breweryDB.connector.entity;
 
 public interface IErrorResult {
 

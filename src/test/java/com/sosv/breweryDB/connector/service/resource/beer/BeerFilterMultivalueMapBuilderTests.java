@@ -9,8 +9,8 @@ import javax.ws.rs.core.MultivaluedMap;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.sosv.breweryDB.connector.entity.beer.Available;
-import com.sosv.breweryDB.connector.entity.beer.Glass;
+import com.sosv.breweryDB.connector.entity.Available;
+import com.sosv.breweryDB.connector.entity.Glass;
 import com.sosv.breweryDB.connector.service.resource.filter.BeerFilter;
 import com.sosv.breweryDB.connector.service.resource.filter.Sorting;
 

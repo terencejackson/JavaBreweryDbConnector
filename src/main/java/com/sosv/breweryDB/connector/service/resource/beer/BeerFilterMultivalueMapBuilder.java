@@ -16,11 +16,15 @@ public class BeerFilterMultivalueMapBuilder {
 	/**
 	 * Converts an {@link IBeerFilter} to a {@link MultivaluedMap}.
 	 * Null values are ignored
-	 * @param filter
+	 * @param filter The filter to convert => if null an empty map is returned
 	 * @return The {@link MultivaluedMap} to use for a service request
 	 */
 	public MultivaluedMap<String, String> convert(IBeerFilter filter) {
 		MultivaluedMap<String, String> map = new MultivaluedMapImpl();
+		if(filter == null){
+			return map;
+		}
+		
 		if (filter.getABV() != null) {
 			map.add("abv", filter.getABV());
 		}

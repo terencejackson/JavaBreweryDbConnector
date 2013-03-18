@@ -1,5 +1,5 @@
 
-package com.sosv.breweryDB.connector.entity.beer;
+package com.sosv.breweryDB.connector.entity;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
