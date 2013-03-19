@@ -1,24 +1,13 @@
 
-package com.sosv.breweryDB.connector.entity;
+package com.sosv.breweryDB.connector.entity.beer;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class BeerResult implements IErrorResult{
+public class BeerResult{
    	private Beer data;
    	private String message;
-   	private String errorMessage;
    	private String status;
    	
- 	/* (non-Javadoc)
-	 * @see com.sosv.breweryDB.connector.entity.beer.IErrorResult#getErrorMessage()
-	 */
- 	@Override
-	public String getErrorMessage() {
-		return errorMessage;
-	}
-	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
-	}
 	public Beer getData(){
 		return this.data;
 	}

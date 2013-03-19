@@ -12,13 +12,15 @@ public class BreweryFilter implements IBreweryFilter {
 	public void setWithLocations(Boolean withLocations) {
 		this.withLocations = withLocations;
 	}
-	
+
 	/**
 	 * Create a filter with only withLocations set to the given value
-	 * @param withLocations True if with locations, false if without
+	 * 
+	 * @param withLocations
+	 *            True if with locations, false if without
 	 * @return A {@link IBreweryFilter} with withLocations set
 	 */
-	public static IBreweryFilter createWithLocationsFilter(boolean withLocations){
+	public static IBreweryFilter createWithLocationsFilter(boolean withLocations) {
 		BreweryFilter bf = new BreweryFilter();
 		bf.setWithLocations(withLocations);
 		return bf;

@@ -4,6 +4,8 @@ import javax.ws.rs.core.MultivaluedMap;
 
 import com.google.common.base.Joiner;
 import com.sosv.breweryDB.connector.service.resource.filter.beer.IBeerFilter;
+import com.sosv.breweryDB.connector.service.resource.filter.beer.IBeersFilter;
+import com.sosv.breweryDB.connector.service.resource.filter.brewery.IBreweriesFilter;
 import com.sosv.breweryDB.connector.service.resource.filter.brewery.IBreweryFilter;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 
@@ -15,17 +17,30 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
  * 
  */
 public class FilterMultivalueMapBuilder {
-
+	
+	
+	public MultivaluedMap<String, String> convert(IBeerFilter filter) {
+		MultivaluedMap<String, String> map = new MultivaluedMapImpl();
+		if (filter == null) {
+			return map;
+		}
+		if (filter.withBreweries() != null) {
+			map.add("withBreweries", filter.withBreweries() ? "Y" : "N");
+		}
+		return map;
+	}
+	
+	
 	/**
-	 * Converts an {@link IBeerFilter} to a {@link MultivaluedMap}. Null values
+	 * Converts an {@link IBeersFilter} to a {@link MultivaluedMap}. Null values
 	 * are ignored
 	 * 
 	 * @param filter
 	 *            The filter to convert => if null an empty map is returned
 	 * @return The {@link MultivaluedMap} to use for a service request
 	 */
-	public MultivaluedMap<String, String> convert(IBeerFilter filter) {
-		MultivaluedMap<String, String> map = new MultivaluedMapImpl();
+	public MultivaluedMap<String, String> convert(IBeersFilter filter) {
+		MultivaluedMap<String, String> map = convert((IBeerFilter) filter);
 		if (filter == null) {
 			return map;
 		}
@@ -67,9 +82,7 @@ public class FilterMultivalueMapBuilder {
 		if (filter.getYear() != null) {
 			map.add("year", filter.getYear().toString());
 		}
-		if (filter.withBreweries() != null) {
-			map.add("withBreweries", filter.withBreweries() ? "Y" : "N");
-		}
+	
 		if (filter.isOrganic() != null) {
 			map.add("isOrganic", filter.isOrganic() ? "Y" : "N");
 		}
@@ -81,10 +94,15 @@ public class FilterMultivalueMapBuilder {
 		if (filter == null) {
 			return map;
 		}
-		
+
 		if (filter.withLocations() != null) {
 			map.add("withLocations", filter.withLocations() ? "Y" : "N");
 		}
+		return map;
+	}
+
+	public MultivaluedMap<String, String> convert(IBreweriesFilter filter) {
+		MultivaluedMap<String, String> map = convert((IBreweryFilter) filter);
 		return map;
 	}
 }

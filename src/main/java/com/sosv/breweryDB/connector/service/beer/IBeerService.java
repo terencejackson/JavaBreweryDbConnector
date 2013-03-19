@@ -17,10 +17,11 @@ package com.sosv.breweryDB.connector.service.beer;
 
 import java.util.List;
 
-import com.sosv.breweryDB.connector.entity.Beer;
-import com.sosv.breweryDB.connector.entity.BeerResultPage;
+import com.sosv.breweryDB.connector.entity.beer.Beer;
+import com.sosv.breweryDB.connector.entity.beer.BeerResultPage;
 import com.sosv.breweryDB.connector.service.exceptions.ApiKeyNotFoundExeption;
 import com.sosv.breweryDB.connector.service.resource.filter.beer.IBeerFilter;
+import com.sosv.breweryDB.connector.service.resource.filter.beer.IBeersFilter;
 
 /**
  * Interface for the services for beers
@@ -37,7 +38,7 @@ public interface IBeerService {
 	 * @return
 	 * @throws ApiKeyNotFoundExeption 
 	 */
-	List<Beer> getAll() throws ApiKeyNotFoundExeption;
+	List<Beer> getAllBeers() throws ApiKeyNotFoundExeption;
 
 	/**
 	 * Get beers for a page. You can get the amount of pages with
@@ -60,7 +61,7 @@ public interface IBeerService {
 	 * @return All beers which apply to the filter
 	 * @throws ApiKeyNotFoundExeption 
 	 */
-	List<Beer> getAll(IBeerFilter beerFilter) throws ApiKeyNotFoundExeption;
+	List<Beer> getAllBeers(IBeersFilter beerFilter) throws ApiKeyNotFoundExeption;
 
 	/**
 	 * Get beers for specific filter. The page indicates the number of the page
@@ -73,5 +74,22 @@ public interface IBeerService {
 	 * @return The {@link BeerResultPage}
 	 * @throws ApiKeyNotFoundExeption 
 	 */
-	BeerResultPage getPagesBeers(Number pageNumber, IBeerFilter beerFilter) throws ApiKeyNotFoundExeption;
+	BeerResultPage getPagesBeers(Number pageNumber, IBeersFilter beerFilter) throws ApiKeyNotFoundExeption;
+	
+	/**
+	 * Get a beer by its id
+	 * @param id Id of the beer
+	 * @return The found {@link Beer} or null
+	 * @throws ApiKeyNotFoundExeption 
+	 */
+	Beer getBeerById(String id) throws ApiKeyNotFoundExeption;
+	
+	/**
+	 * Get a beer by its id with a filter (e.g. with breweries)
+	 * @param id
+	 * @param filter
+	 * @return The found {@link Beer} or null
+	 * @throws ApiKeyNotFoundExeption 
+	 */
+	Beer getBeerById(String id, IBeerFilter filter) throws ApiKeyNotFoundExeption;
 }

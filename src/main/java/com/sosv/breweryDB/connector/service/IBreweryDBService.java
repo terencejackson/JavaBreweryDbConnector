@@ -16,6 +16,7 @@ limitations under the License.
 package com.sosv.breweryDB.connector.service;
 
 import com.sosv.breweryDB.connector.service.beer.IBeerService;
+import com.sosv.breweryDB.connector.service.brewery.IBreweryService;
 
 /**
  * Interface for the breweryDB Service. 
@@ -23,6 +24,6 @@ import com.sosv.breweryDB.connector.service.beer.IBeerService;
  * @author Sven
  *
  */
-public interface IBreweryDBService extends IBeerService{
+public interface IBreweryDBService extends IBeerService, IBreweryService{
 	
 }

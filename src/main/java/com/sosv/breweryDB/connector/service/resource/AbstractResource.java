@@ -69,10 +69,11 @@ public abstract class AbstractResource {
 	 * @param type
 	 * @return
 	 * @throws ApiKeyNotFoundExeption
-	 * @throws ObjectNotFoundException 
+	 * @throws ObjectNotFoundException
 	 */
 	@SuppressWarnings("unchecked")
-	public <T> T get(String path, T type) throws ApiKeyNotFoundExeption, ObjectNotFoundException {
+	public <T> T get(String path, T type) throws ApiKeyNotFoundExeption,
+			ObjectNotFoundException {
 		MultivaluedMap<String, String> map = new MultivaluedMapImpl();
 		map.add("key", apiKey);
 
@@ -102,7 +103,8 @@ public abstract class AbstractResource {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T> T get(T type) throws ApiKeyNotFoundExeption, ObjectNotFoundException {
+	public <T> T get(T type) throws ApiKeyNotFoundExeption,
+			ObjectNotFoundException {
 		MultivaluedMap<String, String> map = new MultivaluedMapImpl();
 		map.add("key", apiKey);
 
@@ -126,11 +128,12 @@ public abstract class AbstractResource {
 	 * @param map
 	 * @param type
 	 * @return
-	 * @throws ApiKeyNotFoundExeption 
-	 * @throws ObjectNotFoundException 
+	 * @throws ApiKeyNotFoundExeption
+	 * @throws ObjectNotFoundException
 	 */
 	@SuppressWarnings("unchecked")
-	public <T> T get(String path, MultivaluedMap<String, String> map, T type) throws ApiKeyNotFoundExeption, ObjectNotFoundException {
+	public <T> T get(String path, MultivaluedMap<String, String> map, T type)
+			throws ApiKeyNotFoundExeption, ObjectNotFoundException {
 		map.add("key", apiKey);
 
 		/**

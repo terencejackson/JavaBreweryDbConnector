@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.inject.Inject;
-import com.sosv.breweryDB.connector.entity.Brewery;
-import com.sosv.breweryDB.connector.entity.BreweryResultPage;
+import com.sosv.breweryDB.connector.entity.brewery.Brewery;
+import com.sosv.breweryDB.connector.entity.brewery.BreweryResultPage;
 import com.sosv.breweryDB.connector.service.exceptions.ApiKeyNotFoundExeption;
 import com.sosv.breweryDB.connector.service.resource.brewery.IBreweryResource;
-import com.sosv.breweryDB.connector.service.resource.filter.brewery.IBreweryFilter;
+import com.sosv.breweryDB.connector.service.resource.filter.brewery.IBreweriesFilter;
 
 public class BreweryService implements IBreweryService {
 
@@ -20,12 +20,12 @@ public class BreweryService implements IBreweryService {
 	}
 
 	@Override
-	public List<Brewery> getAll() throws ApiKeyNotFoundExeption {
-		return getAll(null);
+	public List<Brewery> getAllBreweries() throws ApiKeyNotFoundExeption {
+		return getAllBreweries(null);
 	}
 
 	@Override
-	public List<Brewery> getAll(IBreweryFilter breweryFilter)
+	public List<Brewery> getAllBreweries(IBreweriesFilter breweryFilter)
 			throws ApiKeyNotFoundExeption {
 		// A set would be faster but we take a list here because of sorting
 		// functionality in future releases
@@ -39,7 +39,7 @@ public class BreweryService implements IBreweryService {
 	}
 
 	private List<? extends Brewery> handlePage(BreweryResultPage page,
-			IBreweryFilter filter) throws ApiKeyNotFoundExeption {
+			IBreweriesFilter filter) throws ApiKeyNotFoundExeption {
 		List<Brewery> beers = page.getData();
 		if (beers == null || beers.isEmpty()) {
 			beers = new ArrayList<Brewery>();
@@ -51,5 +51,16 @@ public class BreweryService implements IBreweryService {
 		}
 
 		return beers;
+	}
+
+	@Override
+	public Brewery getBreweryById(String id) throws ApiKeyNotFoundExeption {
+		return breweryResource.getBreweryById(id, null);
+	}
+
+	@Override
+	public Brewery getBreweryById(String id,
+			IBreweriesFilter filter) throws ApiKeyNotFoundExeption {
+		return breweryResource.getBreweryById(id, filter);
 	}
 }

@@ -1,9 +1,12 @@
 
-package com.sosv.breweryDB.connector.entity;
+package com.sosv.breweryDB.connector.entity.brewery;
 
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+import com.sosv.breweryDB.connector.entity.Images;
+import com.sosv.breweryDB.connector.entity.Locations;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Brewery{

@@ -1,12 +1,11 @@
 package com.sosv.breweryDB.connector.service.resource.filter.brewery;
 
 /**
- * Interface for the filter for a brewery request
+ * Interface for a brewery filter
  * @author ssommerf
  *
  */
 public interface IBreweryFilter {
-
 	/**
 	 * Get brewery results with location information included.
 	 * PREMIUM feature!

@@ -18,56 +18,104 @@ package com.sosv.breweryDB.connector.service;
 import java.util.List;
 
 import com.google.inject.Inject;
-import com.sosv.breweryDB.connector.entity.Beer;
-import com.sosv.breweryDB.connector.entity.BeerResultPage;
+import com.sosv.breweryDB.connector.entity.beer.Beer;
+import com.sosv.breweryDB.connector.entity.beer.BeerResultPage;
+import com.sosv.breweryDB.connector.entity.brewery.Brewery;
 import com.sosv.breweryDB.connector.service.beer.IBeerService;
+import com.sosv.breweryDB.connector.service.brewery.IBreweryService;
 import com.sosv.breweryDB.connector.service.exceptions.ApiKeyNotFoundExeption;
 import com.sosv.breweryDB.connector.service.resource.filter.beer.IBeerFilter;
+import com.sosv.breweryDB.connector.service.resource.filter.beer.IBeersFilter;
+import com.sosv.breweryDB.connector.service.resource.filter.brewery.IBreweriesFilter;
 
 /**
  * The service to get the data of the breweryDB service
+ * 
  * @author Sven
- *
+ * 
  */
-public class BreweryDBService implements IBreweryDBService{
+public class BreweryDBService implements IBreweryDBService {
 
 	private IBeerService beerService;
+	private IBreweryService breweryService;
 
 	/**
 	 * C'tor
-	 * @param beerService The beer service which is used to retrieve the beer data
+	 * 
+	 * @param beerService
+	 *            The beer service which is used to retrieve the beer data
 	 */
 	@Inject
-	public BreweryDBService(IBeerService beerService) {
+	public BreweryDBService(IBeerService beerService,
+			IBreweryService breweryService) {
 		super();
 		this.beerService = beerService;
+		this.breweryService = breweryService;
 	}
-
 
 	/*
 	 * (non-Javadoc)
-	 * @see com.sosv.breweryDB.connector.service.beer.IBeerService#getPagesBeers(java.lang.Number)
+	 * 
+	 * @see
+	 * com.sosv.breweryDB.connector.service.beer.IBeerService#getPagesBeers(
+	 * java.lang.Number)
 	 */
 	@Override
-	public BeerResultPage getPagesBeers(Number pageNumber) throws ApiKeyNotFoundExeption {
+	public BeerResultPage getPagesBeers(Number pageNumber)
+			throws ApiKeyNotFoundExeption {
 		return beerService.getPagesBeers(pageNumber);
 	}
 
 	@Override
-	public List<Beer> getAll(IBeerFilter beerFilter)
+	public List<Beer> getAllBeers(IBeersFilter beerFilter)
 			throws ApiKeyNotFoundExeption {
-		return beerService.getAll();
+		return beerService.getAllBeers();
 	}
 
 	@Override
-	public BeerResultPage getPagesBeers(Number pageNumber, IBeerFilter beerFilter) throws ApiKeyNotFoundExeption {
+	public BeerResultPage getPagesBeers(Number pageNumber,
+			IBeersFilter beerFilter) throws ApiKeyNotFoundExeption {
 		return beerService.getPagesBeers(pageNumber, beerFilter);
 	}
 
+	@Override
+	public List<Beer> getAllBeers() throws ApiKeyNotFoundExeption {
+		return beerService.getAllBeers();
+	}
 
 	@Override
-	public List<Beer> getAll() throws ApiKeyNotFoundExeption {
-		return beerService.getAll();
+	public Beer getBeerById(String id) throws ApiKeyNotFoundExeption {
+		return beerService.getBeerById(id);
+	}
+
+	@Override
+	public Beer getBeerById(String id, IBeerFilter filter)
+			throws ApiKeyNotFoundExeption {
+		return beerService.getBeerById(id, filter);
+	}
+
+	@Override
+	public List<Brewery> getAllBreweries() throws ApiKeyNotFoundExeption {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Brewery> getAllBreweries(IBreweriesFilter breweryFilter)
+			throws ApiKeyNotFoundExeption {
+		return breweryService.getAllBreweries();
+	}
+
+	@Override
+	public Brewery getBreweryById(String id) throws ApiKeyNotFoundExeption {
+		return breweryService.getBreweryById(id);
+	}
+
+	@Override
+	public Brewery getBreweryById(String id,
+			IBreweriesFilter filter)
+			throws ApiKeyNotFoundExeption {
+		return breweryService.getBreweryById(id, filter);
 	}
 
 }

@@ -1,11 +1,16 @@
 
-package com.sosv.breweryDB.connector.entity;
+package com.sosv.breweryDB.connector.entity.beer;
 
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+import com.sosv.breweryDB.connector.entity.Available;
+import com.sosv.breweryDB.connector.entity.Glass;
+import com.sosv.breweryDB.connector.entity.Style;
+import com.sosv.breweryDB.connector.entity.brewery.Brewery;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Beer{

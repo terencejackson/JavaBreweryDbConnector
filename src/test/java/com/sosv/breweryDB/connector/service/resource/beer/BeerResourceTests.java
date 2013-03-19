@@ -30,13 +30,13 @@ import java.util.Properties;
 import org.junit.Test;
 
 import com.sosv.breweryDB.connector.configuration.IBreweryDBConnectorConfiguration;
-import com.sosv.breweryDB.connector.entity.Beer;
-import com.sosv.breweryDB.connector.entity.BeerResultPage;
+import com.sosv.breweryDB.connector.entity.beer.Beer;
+import com.sosv.breweryDB.connector.entity.beer.BeerResultPage;
 import com.sosv.breweryDB.connector.mockery.Mockery;
 import com.sosv.breweryDB.connector.service.beer.BeerService;
 import com.sosv.breweryDB.connector.service.beer.IBeerService;
 import com.sosv.breweryDB.connector.service.exceptions.ApiKeyNotFoundExeption;
-import com.sosv.breweryDB.connector.service.resource.filter.beer.BeerFilter;
+import com.sosv.breweryDB.connector.service.resource.filter.beer.BeersFilter;
 import com.sun.jersey.api.client.Client;
 
 public class BeerResourceTests {
@@ -63,7 +63,7 @@ public class BeerResourceTests {
 	public void testGetAllWithBreweries() throws ApiKeyNotFoundExeption{
 		IBeerResource br = new BeerResource(fakeConfig, client);
 		IBeerService bs = new BeerService(br);
-		List<Beer> result = bs.getAll(BeerFilter.createWithBreweriesFilter(true));
+		List<Beer> result = bs.getAllBeers(BeersFilter.createWithBreweriesFilter(true));
 		assertEquals(100, result.size());
 		assertNotNull(result.get(0).getBreweries());
 	}
@@ -72,7 +72,7 @@ public class BeerResourceTests {
 	public void testGetWithBreweriesPage2() throws ApiKeyNotFoundExeption{
 		IBeerResource br = new BeerResource(fakeConfig, client);
 		IBeerService bs = new BeerService(br);
-		BeerResultPage result = bs.getPagesBeers(2, BeerFilter.createWithBreweriesFilter(true));
+		BeerResultPage result = bs.getPagesBeers(2, BeersFilter.createWithBreweriesFilter(true));
 		assertEquals(2, result.getCurrentPage());
 		assertNotNull(result.getData().get(0).getBreweries());
 	}
@@ -81,7 +81,7 @@ public class BeerResourceTests {
 	public void testGetAll() throws IOException, ApiKeyNotFoundExeption {
 		IBeerResource br = new BeerResource(fakeConfig, client);
 		IBeerService bs = new BeerService(br);
-		Collection<Beer> result = bs.getAll();
+		Collection<Beer> result = bs.getAllBeers();
 		assertNotNull(result);
 		assertEquals(150, result.size());
 	}
@@ -118,23 +118,16 @@ public class BeerResourceTests {
 	@Test
 	public void testGetById() throws ApiKeyNotFoundExeption {
 		IBeerResource br = new BeerResource(fakeConfig, client);
-		Beer result = br.getBeerById("cBLTUw");
+		Beer result = br.getBeerById("cBLTUw", null);
 		assertNotNull(result);
 	}
 
 	@Test
 	public void testGetByIdNull() throws ApiKeyNotFoundExeption {
 		IBeerResource br = new BeerResource(fakeConfig, client);
-		Beer result = br.getBeerById("cBLTUwx");
+		Beer result = br.getBeerById("cBLTUwx", null);
 		assertNull(result);
 	}
-	
-//	@Test
-//	public void testGetByIdNullReal() throws ApiKeyNotFoundExeption {
-//		IBeerResource br = new BeerResource(configuration, new JerseyClientProvider().get());
-//		Beer result = br.getBeerById("cBLTUwx");
-//		assertNull(result);
-//	}
 
 	@Test(expected = ApiKeyNotFoundExeption.class)
 	public void testApiKeyNotFoundException() throws ApiKeyNotFoundExeption {
@@ -142,7 +135,7 @@ public class BeerResourceTests {
 		String apiKey = fakeConfig.getApiKey();
 		when(fakeConfig2.getApiKey()).thenReturn(apiKey + "x");
 		IBeerResource br = new BeerResource(fakeConfig2, client);
-		br.getBeerById("cBLTUw");
+		br.getBeerById("cBLTUw", null);
 	}
 
 }

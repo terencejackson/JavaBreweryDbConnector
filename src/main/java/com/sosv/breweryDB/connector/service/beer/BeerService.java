@@ -18,11 +18,12 @@ package com.sosv.breweryDB.connector.service.beer;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sosv.breweryDB.connector.entity.Beer;
-import com.sosv.breweryDB.connector.entity.BeerResultPage;
+import com.sosv.breweryDB.connector.entity.beer.Beer;
+import com.sosv.breweryDB.connector.entity.beer.BeerResultPage;
 import com.sosv.breweryDB.connector.service.exceptions.ApiKeyNotFoundExeption;
 import com.sosv.breweryDB.connector.service.resource.beer.IBeerResource;
 import com.sosv.breweryDB.connector.service.resource.filter.beer.IBeerFilter;
+import com.sosv.breweryDB.connector.service.resource.filter.beer.IBeersFilter;
 import com.google.inject.Inject;
 
 /**
@@ -48,12 +49,12 @@ public class BeerService implements IBeerService {
 	}
 
 	@Override
-	public List<Beer> getAll() throws ApiKeyNotFoundExeption {
-		return getAll(null);
+	public List<Beer> getAllBeers() throws ApiKeyNotFoundExeption {
+		return getAllBeers(null);
 	}
 
 	private List<? extends Beer> handlePage(BeerResultPage page,
-			IBeerFilter filter) throws ApiKeyNotFoundExeption {
+			IBeersFilter filter) throws ApiKeyNotFoundExeption {
 		List<Beer> beers = page.getData();
 		if (beers == null || beers.isEmpty()) {
 			beers = new ArrayList<Beer>();
@@ -68,7 +69,7 @@ public class BeerService implements IBeerService {
 	}
 
 	@Override
-	public List<Beer> getAll(IBeerFilter beerFilter)
+	public List<Beer> getAllBeers(IBeersFilter beerFilter)
 			throws ApiKeyNotFoundExeption {
 		// A set would be faster but we take a list here because of sorting
 		// functionality in future releases
@@ -82,8 +83,18 @@ public class BeerService implements IBeerService {
 
 	@Override
 	public BeerResultPage getPagesBeers(Number pageNumber,
-			IBeerFilter beerFilter) throws ApiKeyNotFoundExeption {
+			IBeersFilter beerFilter) throws ApiKeyNotFoundExeption {
 		return beerResource.getBeers(pageNumber, beerFilter);
+	}
+
+	@Override
+	public Beer getBeerById(String id) throws ApiKeyNotFoundExeption {
+		return getBeerById(id, null);
+	}
+
+	@Override
+	public Beer getBeerById(String id, IBeerFilter filter) throws ApiKeyNotFoundExeption {
+		return beerResource.getBeerById(id, filter);
 	}
 
 }

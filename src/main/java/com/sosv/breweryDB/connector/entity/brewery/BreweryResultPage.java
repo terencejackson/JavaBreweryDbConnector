@@ -1,18 +1,14 @@
 
-package com.sosv.breweryDB.connector.entity;
+package com.sosv.breweryDB.connector.entity.brewery;
 
 import java.util.List;
 
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
-
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class BeerResultPage implements IErrorResult {
+public class BreweryResultPage{
    	private Number currentPage;
-   	private List<Beer> data;
+   	private List<Brewery> data;
    	private Number numberOfPages;
    	private String status;
    	private Number totalResults;
-	private String errorMessage;
 
  	public Number getCurrentPage(){
 		return this.currentPage;
@@ -20,10 +16,10 @@ public class BeerResultPage implements IErrorResult {
 	public void setCurrentPage(Number currentPage){
 		this.currentPage = currentPage;
 	}
- 	public List<Beer> getData(){
+ 	public List<Brewery> getData(){
 		return this.data;
 	}
-	public void setData(List<Beer> data){
+	public void setData(List<Brewery> data){
 		this.data = data;
 	}
  	public Number getNumberOfPages(){
@@ -43,13 +39,5 @@ public class BeerResultPage implements IErrorResult {
 	}
 	public void setTotalResults(Number totalResults){
 		this.totalResults = totalResults;
-	}
-	
-	@Override
-	public String getErrorMessage() {
-		return errorMessage;
-	}
-	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
 	}
 }

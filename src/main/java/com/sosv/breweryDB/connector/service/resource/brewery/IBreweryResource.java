@@ -1,8 +1,9 @@
 package com.sosv.breweryDB.connector.service.resource.brewery;
 
-import com.sosv.breweryDB.connector.entity.Brewery;
-import com.sosv.breweryDB.connector.entity.BreweryResultPage;
+import com.sosv.breweryDB.connector.entity.brewery.Brewery;
+import com.sosv.breweryDB.connector.entity.brewery.BreweryResultPage;
 import com.sosv.breweryDB.connector.service.exceptions.ApiKeyNotFoundExeption;
+import com.sosv.breweryDB.connector.service.resource.filter.brewery.IBreweriesFilter;
 import com.sosv.breweryDB.connector.service.resource.filter.brewery.IBreweryFilter;
 
 /**
@@ -22,7 +23,7 @@ public interface IBreweryResource {
 	 * @return The response as {@link BreweryResultPage}
 	 * @throws ApiKeyNotFoundExeption
 	 */
-	BreweryResultPage getBreweries(Number currentPage, IBreweryFilter filter)
+	BreweryResultPage getBreweries(Number currentPage, IBreweriesFilter filter)
 			throws ApiKeyNotFoundExeption;
 
 	/**
@@ -33,6 +34,7 @@ public interface IBreweryResource {
 	 * @throws ApiKeyNotFoundExeption
 	 *             If the provided api key was not found by brewery db
 	 */
-	Brewery getBreweryById(String id) throws ApiKeyNotFoundExeption;
+	Brewery getBreweryById(String id, IBreweryFilter filter)
+			throws ApiKeyNotFoundExeption;
 
 }

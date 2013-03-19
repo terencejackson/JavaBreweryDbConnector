@@ -19,14 +19,15 @@ import javax.ws.rs.core.MultivaluedMap;
 
 import com.google.inject.Inject;
 import com.sosv.breweryDB.connector.configuration.IBreweryDBConnectorConfiguration;
-import com.sosv.breweryDB.connector.entity.Beer;
-import com.sosv.breweryDB.connector.entity.BeerResult;
-import com.sosv.breweryDB.connector.entity.BeerResultPage;
+import com.sosv.breweryDB.connector.entity.beer.Beer;
+import com.sosv.breweryDB.connector.entity.beer.BeerResult;
+import com.sosv.breweryDB.connector.entity.beer.BeerResultPage;
 import com.sosv.breweryDB.connector.service.exceptions.ApiKeyNotFoundExeption;
 import com.sosv.breweryDB.connector.service.exceptions.ObjectNotFoundException;
 import com.sosv.breweryDB.connector.service.resource.AbstractResource;
 import com.sosv.breweryDB.connector.service.resource.filter.FilterMultivalueMapBuilder;
 import com.sosv.breweryDB.connector.service.resource.filter.beer.IBeerFilter;
+import com.sosv.breweryDB.connector.service.resource.filter.beer.IBeersFilter;
 import com.sun.jersey.api.client.Client;
 
 /**
@@ -50,7 +51,7 @@ public class BeerResource extends AbstractResource implements IBeerResource {
 	 * com.sosv.breweryDB.connector.service.resource.beer.IBeerResource#getBeers
 	 * (java.lang.Integer)
 	 */
-	public BeerResultPage getBeers(Number currentPage, IBeerFilter filter)
+	public BeerResultPage getBeers(Number currentPage, IBeersFilter filter)
 			throws ApiKeyNotFoundExeption {
 		MultivaluedMap<String, String> map = new FilterMultivalueMapBuilder()
 				.convert(filter);
@@ -74,7 +75,7 @@ public class BeerResource extends AbstractResource implements IBeerResource {
 	 * (java.lang.String)
 	 */
 	@Override
-	public Beer getBeerById(String id) throws ApiKeyNotFoundExeption {
+	public Beer getBeerById(String id, IBeerFilter filter) throws ApiKeyNotFoundExeption {
 		Beer result = null;
 		try {
 			result = get(String.format("beer/%s/", id), new BeerResult())

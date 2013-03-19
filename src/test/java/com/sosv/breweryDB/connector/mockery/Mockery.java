@@ -14,9 +14,10 @@ import org.apache.commons.io.IOUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.sosv.breweryDB.connector.configuration.IBreweryDBConnectorConfiguration;
-import com.sosv.breweryDB.connector.entity.BeerResult;
-import com.sosv.breweryDB.connector.entity.BeerResultPage;
-import com.sosv.breweryDB.connector.entity.BreweryResultPage;
+import com.sosv.breweryDB.connector.entity.beer.BeerResult;
+import com.sosv.breweryDB.connector.entity.beer.BeerResultPage;
+import com.sosv.breweryDB.connector.entity.brewery.BreweryResult;
+import com.sosv.breweryDB.connector.entity.brewery.BreweryResultPage;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientHandlerException;
 import com.sun.jersey.api.client.ClientResponse;
@@ -52,8 +53,57 @@ public class Mockery {
 		createBreweriesMock(webResource, 2, fakeConfig);
 		createBreweriesMock(webResource, 3, fakeConfig);
 
-		createGetByIdMock(client, "cBLTUw", webResource, fakeConfig);
+		createGetBeerByIdMock(client, "cBLTUw", webResource, fakeConfig);
+		createGetBreweryByIdMock(client, "Klgom2", webResource, fakeConfig);
 		return client;
+	}
+
+	public static IBreweryDBConnectorConfiguration createConfigMock() {
+		IBreweryDBConnectorConfiguration fakeConfig = mock(IBreweryDBConnectorConfiguration.class);
+		when(fakeConfig.getApiKey()).thenReturn("jjjjkkkkjjjkkkk");
+		return fakeConfig;
+	}
+
+	private static void createGetBreweryByIdMock(Client client, String string,
+			WebResource webResource, IBreweryDBConnectorConfiguration fakeConfig)
+			throws UniformInterfaceException, ClientHandlerException,
+			IOException {
+		MultivaluedMap<String, String> withLocationsMap = new MultivaluedMapImpl();
+		withLocationsMap.add("key", fakeConfig.getApiKey());
+		withLocationsMap.add("withLocations", "Y");
+
+		MultivaluedMap<String, String> withoutLocationsMap = new MultivaluedMapImpl();
+		withoutLocationsMap.add("key", fakeConfig.getApiKey());
+
+		WebResource resource1 = mock(WebResource.class);
+		when(webResource.path("brewery/" + string + "/")).thenReturn(resource1);
+		when(resource1.queryParams(withLocationsMap)).thenReturn(resource1);
+		when(resource1.queryParams(withoutLocationsMap)).thenReturn(resource1);
+		when(resource1.get(BreweryResult.class)).thenReturn(
+				createBreweryMock(string));
+
+		WebResource resource2 = mock(WebResource.class);
+		when(webResource.path("brewery/" + string + "x/"))
+				.thenReturn(resource2);
+		when(resource2.queryParams(withLocationsMap)).thenReturn(resource2);
+		when(resource2.queryParams(withoutLocationsMap)).thenReturn(resource2);
+		ClientResponse r = mock(ClientResponse.class);
+		when(r.getStatus()).thenReturn(404);
+		Throwable objectNotFound = new UniformInterfaceException(r);
+		when(resource2.get(BreweryResult.class)).thenThrow(objectNotFound);
+
+	}
+
+	private static BreweryResult createBreweryMock(String string)
+			throws IOException {
+		InputStream stream = Mockery.class
+				.getResourceAsStream("/breweries/brewery" + string + ".json");
+		StringWriter writer = new StringWriter();
+		IOUtils.copy(stream, writer, "UTF-8");
+		String theString = writer.toString();
+
+		ObjectMapper mapper = new ObjectMapper();
+		return mapper.readValue(theString, BreweryResult.class);
 	}
 
 	private static void createBreweriesMock(WebResource webResource, int page,
@@ -61,33 +111,33 @@ public class Mockery {
 			throws UniformInterfaceException, ClientHandlerException,
 			IOException {
 		WebResource resource1 = mock(WebResource.class);
-		MultivaluedMap<String, String> withBreweriesMap = new MultivaluedMapImpl();
-		withBreweriesMap.add("key", fakeConfig.getApiKey());
-		withBreweriesMap.add("withLocations", "Y");
+		MultivaluedMap<String, String> withLocationsMap = new MultivaluedMapImpl();
+		withLocationsMap.add("key", fakeConfig.getApiKey());
+		withLocationsMap.add("withLocations", "Y");
 		if (page > 1) {
-			withBreweriesMap.add("p", page + "");
+			withLocationsMap.add("p", page + "");
 		}
-		when(webResource.queryParams(withBreweriesMap)).thenReturn(resource1);
+		when(webResource.queryParams(withLocationsMap)).thenReturn(resource1);
 
 		when(resource1.get(BreweryResultPage.class)).thenReturn(
 				createBreweriesWithLocations(page));
 
 		WebResource resource2 = mock(WebResource.class);
-		MultivaluedMap<String, String> withoutBreweriesMap = new MultivaluedMapImpl();
-		withoutBreweriesMap.add("key", fakeConfig.getApiKey());
+		MultivaluedMap<String, String> withoutLocationsMap = new MultivaluedMapImpl();
+		withoutLocationsMap.add("key", fakeConfig.getApiKey());
 		if (page > 1) {
-			withoutBreweriesMap.add("p", page + "");
+			withoutLocationsMap.add("p", page + "");
 		}
-		when(webResource.queryParams(withoutBreweriesMap))
+		when(webResource.queryParams(withoutLocationsMap))
 				.thenReturn(resource2);
 		when(resource2.get(BreweryResultPage.class)).thenReturn(
 				createBreweries(page));
 	}
 
-	private static BreweryResultPage createBreweries(int page) throws IOException {
+	private static BreweryResultPage createBreweries(int page)
+			throws IOException {
 		InputStream stream = Mockery.class
-				.getResourceAsStream("/breweries/breweryPage" + page
-						+ ".json");
+				.getResourceAsStream("/breweries/breweryPage" + page + ".json");
 		StringWriter writer = new StringWriter();
 		IOUtils.copy(stream, writer, "UTF-8");
 		String theString = writer.toString();
@@ -113,16 +163,18 @@ public class Mockery {
 			int page, IBreweryDBConnectorConfiguration fakeConfig)
 			throws UniformInterfaceException, ClientHandlerException,
 			IOException {
-		WebResource resource1 = mock(WebResource.class);
 		MultivaluedMap<String, String> mapPage1 = new MultivaluedMapImpl();
 		mapPage1.add("key", fakeConfig.getApiKey());
 		mapPage1.add("withBreweries", "Y");
 		if (page > 1) {
 			mapPage1.add("p", page + "");
 		}
-		when(webResource.queryParams(mapPage1)).thenReturn(resource1);
 
-		when(resource1.get(BeerResultPage.class)).thenReturn(
+		WebResource r1 = mock(WebResource.class);
+		when(webResource.path("beers/")).thenReturn(beersResource);
+		when(beersResource.queryParams(mapPage1)).thenReturn(r1);
+
+		when(r1.get(BeerResultPage.class)).thenReturn(
 				createPageWithBreweries(page));
 
 	}
@@ -140,13 +192,7 @@ public class Mockery {
 		return mapper.readValue(theString, BeerResultPage.class);
 	}
 
-	public static IBreweryDBConnectorConfiguration createConfigMock() {
-		IBreweryDBConnectorConfiguration fakeConfig = mock(IBreweryDBConnectorConfiguration.class);
-		when(fakeConfig.getApiKey()).thenReturn("jjjjkkkkjjjkkkk");
-		return fakeConfig;
-	}
-
-	private static void createGetByIdMock(Client client, String string,
+	private static void createGetBeerByIdMock(Client client, String string,
 			WebResource resource, IBreweryDBConnectorConfiguration fakeConfig)
 			throws UniformInterfaceException, ClientHandlerException,
 			IOException {
@@ -178,17 +224,21 @@ public class Mockery {
 
 	}
 
+	private static WebResource beersResource = mock(WebResource.class);
+
 	private static void createPageMock(WebResource webResource, int page,
 			IBreweryDBConnectorConfiguration fakeConfig) throws IOException {
-		WebResource resource1 = mock(WebResource.class);
-		MultivaluedMap<String, String> mapPage1 = new MultivaluedMapImpl();
-		mapPage1.add("key", fakeConfig.getApiKey());
+		MultivaluedMap<String, String> map = new MultivaluedMapImpl();
+		map.add("key", fakeConfig.getApiKey());
 		if (page > 1) {
-			mapPage1.add("p", page + "");
+			map.add("p", page + "");
 		}
-		when(webResource.queryParams(mapPage1)).thenReturn(resource1);
 
-		when(resource1.get(BeerResultPage.class)).thenReturn(createPage(page));
+		WebResource r1 = mock(WebResource.class);
+		when(webResource.path("beers/")).thenReturn(beersResource);
+		when(beersResource.queryParams(map)).thenReturn(r1);
+
+		when(r1.get(BeerResultPage.class)).thenReturn(createPage(page));
 	}
 
 	private static BeerResult createBeerResult(String beerId)

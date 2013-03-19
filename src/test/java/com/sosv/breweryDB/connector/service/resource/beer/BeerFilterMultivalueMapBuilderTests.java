@@ -13,8 +13,8 @@ import com.sosv.breweryDB.connector.entity.Available;
 import com.sosv.breweryDB.connector.entity.Glass;
 import com.sosv.breweryDB.connector.service.resource.filter.FilterMultivalueMapBuilder;
 import com.sosv.breweryDB.connector.service.resource.filter.Sorting;
-import com.sosv.breweryDB.connector.service.resource.filter.beer.BeerFilter;
-import com.sosv.breweryDB.connector.service.resource.filter.beer.IBeerFilter;
+import com.sosv.breweryDB.connector.service.resource.filter.beer.BeersFilter;
+import com.sosv.breweryDB.connector.service.resource.filter.beer.IBeersFilter;
 
 public class BeerFilterMultivalueMapBuilderTests {
 
@@ -31,7 +31,7 @@ public class BeerFilterMultivalueMapBuilderTests {
 
 	@Test
 	public void testNameFilterAndConvertion() {
-		IBeerFilter filter = BeerFilter.createNameFilter("Test");
+		IBeersFilter filter = BeersFilter.createNameFilter("Test");
 		MultivaluedMap<String, String> result = builder.convert(filter);
 		assertTrue(result.containsKey("name"));
 		assertFalse(result.containsKey("abv"));
@@ -50,7 +50,7 @@ public class BeerFilterMultivalueMapBuilderTests {
 
 	@Test
 	public void testNameSortAndConvertion() {
-		IBeerFilter filter = BeerFilter.createSortFilter(Sorting.DESC);
+		IBeersFilter filter = BeersFilter.createSortFilter(Sorting.DESC);
 		MultivaluedMap<String, String> result = builder.convert(filter);
 		assertFalse(result.containsKey("name"));
 		assertFalse(result.containsKey("abv"));
@@ -70,7 +70,7 @@ public class BeerFilterMultivalueMapBuilderTests {
 
 	@Test(expected = UnsupportedOperationException.class)
 	public void testIdsException() {
-		BeerFilter filter = (BeerFilter) BeerFilter.createSortFilter(Sorting.DESC);
+		BeersFilter filter = (BeersFilter) BeersFilter.createSortFilter(Sorting.DESC);
 		filter.setIds(Arrays.asList(new String[] { "1", "11", "111", "1111",
 				"11111", "111111", "1111111", "2", "22", "222", "2222" }));
 		builder.convert(filter);
@@ -78,7 +78,7 @@ public class BeerFilterMultivalueMapBuilderTests {
 
 	@Test
 	public void testIdsAndSorting() {
-		BeerFilter filter = (BeerFilter) BeerFilter.createSortFilter(Sorting.DESC);
+		BeersFilter filter = (BeersFilter) BeersFilter.createSortFilter(Sorting.DESC);
 		filter.setIds(Arrays.asList(new String[] { "1", "11", "111", "1111" }));
 		
 		Available available = new Available();
