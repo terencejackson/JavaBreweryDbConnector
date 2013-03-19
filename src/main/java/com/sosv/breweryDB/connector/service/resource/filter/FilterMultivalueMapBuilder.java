@@ -1,30 +1,35 @@
-package com.sosv.breweryDB.connector.service.resource.beer;
+package com.sosv.breweryDB.connector.service.resource.filter;
 
 import javax.ws.rs.core.MultivaluedMap;
 
 import com.google.common.base.Joiner;
-import com.sosv.breweryDB.connector.service.resource.filter.IBeerFilter;
+import com.sosv.breweryDB.connector.service.resource.filter.beer.IBeerFilter;
+import com.sosv.breweryDB.connector.service.resource.filter.brewery.IBreweryFilter;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 /**
- * Class provides the functionality to convert a filter to a {@link MultivaluedMap}
+ * Class provides the functionality to convert a filter to a
+ * {@link MultivaluedMap}
+ * 
  * @author ssommerf
- *
+ * 
  */
-public class BeerFilterMultivalueMapBuilder {
+public class FilterMultivalueMapBuilder {
 
 	/**
-	 * Converts an {@link IBeerFilter} to a {@link MultivaluedMap}.
-	 * Null values are ignored
-	 * @param filter The filter to convert => if null an empty map is returned
+	 * Converts an {@link IBeerFilter} to a {@link MultivaluedMap}. Null values
+	 * are ignored
+	 * 
+	 * @param filter
+	 *            The filter to convert => if null an empty map is returned
 	 * @return The {@link MultivaluedMap} to use for a service request
 	 */
 	public MultivaluedMap<String, String> convert(IBeerFilter filter) {
 		MultivaluedMap<String, String> map = new MultivaluedMapImpl();
-		if(filter == null){
+		if (filter == null) {
 			return map;
 		}
-		
+
 		if (filter.getABV() != null) {
 			map.add("abv", filter.getABV());
 		}
@@ -67,6 +72,18 @@ public class BeerFilterMultivalueMapBuilder {
 		}
 		if (filter.isOrganic() != null) {
 			map.add("isOrganic", filter.isOrganic() ? "Y" : "N");
+		}
+		return map;
+	}
+
+	public MultivaluedMap<String, String> convert(IBreweryFilter filter) {
+		MultivaluedMap<String, String> map = new MultivaluedMapImpl();
+		if (filter == null) {
+			return map;
+		}
+		
+		if (filter.withLocations() != null) {
+			map.add("withLocations", filter.withLocations() ? "Y" : "N");
 		}
 		return map;
 	}

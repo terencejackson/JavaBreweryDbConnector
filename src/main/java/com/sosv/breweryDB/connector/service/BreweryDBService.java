@@ -19,10 +19,10 @@ import java.util.List;
 
 import com.google.inject.Inject;
 import com.sosv.breweryDB.connector.entity.Beer;
-import com.sosv.breweryDB.connector.entity.Page;
+import com.sosv.breweryDB.connector.entity.BeerResultPage;
 import com.sosv.breweryDB.connector.service.beer.IBeerService;
 import com.sosv.breweryDB.connector.service.exceptions.ApiKeyNotFoundExeption;
-import com.sosv.breweryDB.connector.service.resource.filter.IBeerFilter;
+import com.sosv.breweryDB.connector.service.resource.filter.beer.IBeerFilter;
 
 /**
  * The service to get the data of the breweryDB service
@@ -49,7 +49,7 @@ public class BreweryDBService implements IBreweryDBService{
 	 * @see com.sosv.breweryDB.connector.service.beer.IBeerService#getPagesBeers(java.lang.Number)
 	 */
 	@Override
-	public Page getPagesBeers(Number pageNumber) throws ApiKeyNotFoundExeption {
+	public BeerResultPage getPagesBeers(Number pageNumber) throws ApiKeyNotFoundExeption {
 		return beerService.getPagesBeers(pageNumber);
 	}
 
@@ -60,7 +60,7 @@ public class BreweryDBService implements IBreweryDBService{
 	}
 
 	@Override
-	public Page getPagesBeers(Number pageNumber, IBeerFilter beerFilter) throws ApiKeyNotFoundExeption {
+	public BeerResultPage getPagesBeers(Number pageNumber, IBeerFilter beerFilter) throws ApiKeyNotFoundExeption {
 		return beerService.getPagesBeers(pageNumber, beerFilter);
 	}
 

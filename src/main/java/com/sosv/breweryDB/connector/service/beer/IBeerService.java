@@ -18,9 +18,9 @@ package com.sosv.breweryDB.connector.service.beer;
 import java.util.List;
 
 import com.sosv.breweryDB.connector.entity.Beer;
-import com.sosv.breweryDB.connector.entity.Page;
+import com.sosv.breweryDB.connector.entity.BeerResultPage;
 import com.sosv.breweryDB.connector.service.exceptions.ApiKeyNotFoundExeption;
-import com.sosv.breweryDB.connector.service.resource.filter.IBeerFilter;
+import com.sosv.breweryDB.connector.service.resource.filter.beer.IBeerFilter;
 
 /**
  * Interface for the services for beers
@@ -41,16 +41,16 @@ public interface IBeerService {
 
 	/**
 	 * Get beers for a page. You can get the amount of pages with
-	 * {@link Page#getNumberOfPages()} and the current page with
-	 * {@link Page#getCurrentPage()}. If you want the first page you can use
+	 * {@link BeerResultPage#getNumberOfPages()} and the current page with
+	 * {@link BeerResultPage#getCurrentPage()}. If you want the first page you can use
 	 * null as parameter
 	 * 
 	 * @param pageNumber
 	 *            The number of the page. First page can be retrieved with null.
-	 * @return The {@link Page}
+	 * @return The {@link BeerResultPage}
 	 * @throws ApiKeyNotFoundExeption 
 	 */
-	Page getPagesBeers(Number pageNumber) throws ApiKeyNotFoundExeption;
+	BeerResultPage getPagesBeers(Number pageNumber) throws ApiKeyNotFoundExeption;
 
 	/**
 	 * Get all beers with a filter applied
@@ -70,8 +70,8 @@ public interface IBeerService {
 	 *            The filter to apply
 	 * @param pageNumber
 	 *            The page number => for page 1 provide NULL
-	 * @return The {@link Page}
+	 * @return The {@link BeerResultPage}
 	 * @throws ApiKeyNotFoundExeption 
 	 */
-	Page getPagesBeers(Number pageNumber, IBeerFilter beerFilter) throws ApiKeyNotFoundExeption;
+	BeerResultPage getPagesBeers(Number pageNumber, IBeerFilter beerFilter) throws ApiKeyNotFoundExeption;
 }

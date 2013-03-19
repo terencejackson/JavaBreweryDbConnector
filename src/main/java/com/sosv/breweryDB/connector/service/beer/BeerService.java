@@ -19,10 +19,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.sosv.breweryDB.connector.entity.Beer;
-import com.sosv.breweryDB.connector.entity.Page;
+import com.sosv.breweryDB.connector.entity.BeerResultPage;
 import com.sosv.breweryDB.connector.service.exceptions.ApiKeyNotFoundExeption;
 import com.sosv.breweryDB.connector.service.resource.beer.IBeerResource;
-import com.sosv.breweryDB.connector.service.resource.filter.IBeerFilter;
+import com.sosv.breweryDB.connector.service.resource.filter.beer.IBeerFilter;
+import com.google.inject.Inject;
 
 /**
  * Implementation of the beer service
@@ -34,13 +35,15 @@ public class BeerService implements IBeerService {
 
 	private IBeerResource beerResource;
 
+	@Inject
 	public BeerService(IBeerResource beerResource) {
 		this.beerResource = beerResource;
 	}
 
 	@Override
-	public Page getPagesBeers(Number pageNumber) throws ApiKeyNotFoundExeption {
-		Page page = this.beerResource.getBeers(pageNumber, null);
+	public BeerResultPage getPagesBeers(Number pageNumber)
+			throws ApiKeyNotFoundExeption {
+		BeerResultPage page = this.beerResource.getBeers(pageNumber, null);
 		return page;
 	}
 
@@ -49,7 +52,8 @@ public class BeerService implements IBeerService {
 		return getAll(null);
 	}
 
-	private List<? extends Beer> handlePage(Page page, IBeerFilter filter) throws ApiKeyNotFoundExeption {
+	private List<? extends Beer> handlePage(BeerResultPage page,
+			IBeerFilter filter) throws ApiKeyNotFoundExeption {
 		List<Beer> beers = page.getData();
 		if (beers == null || beers.isEmpty()) {
 			beers = new ArrayList<Beer>();
@@ -69,7 +73,7 @@ public class BeerService implements IBeerService {
 		// A set would be faster but we take a list here because of sorting
 		// functionality in future releases
 		List<Beer> beers = new ArrayList<Beer>();
-		Page firstPage = this.beerResource.getBeers(null, beerFilter);
+		BeerResultPage firstPage = this.beerResource.getBeers(null, beerFilter);
 
 		beers.addAll(handlePage(firstPage, beerFilter));
 
@@ -77,7 +81,8 @@ public class BeerService implements IBeerService {
 	}
 
 	@Override
-	public Page getPagesBeers(Number pageNumber, IBeerFilter beerFilter) throws ApiKeyNotFoundExeption {
+	public BeerResultPage getPagesBeers(Number pageNumber,
+			IBeerFilter beerFilter) throws ApiKeyNotFoundExeption {
 		return beerResource.getBeers(pageNumber, beerFilter);
 	}
 

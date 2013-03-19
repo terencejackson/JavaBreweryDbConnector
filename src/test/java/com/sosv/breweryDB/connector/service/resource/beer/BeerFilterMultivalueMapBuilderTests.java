@@ -11,12 +11,14 @@ import org.junit.Test;
 
 import com.sosv.breweryDB.connector.entity.Available;
 import com.sosv.breweryDB.connector.entity.Glass;
-import com.sosv.breweryDB.connector.service.resource.filter.BeerFilter;
+import com.sosv.breweryDB.connector.service.resource.filter.FilterMultivalueMapBuilder;
 import com.sosv.breweryDB.connector.service.resource.filter.Sorting;
+import com.sosv.breweryDB.connector.service.resource.filter.beer.BeerFilter;
+import com.sosv.breweryDB.connector.service.resource.filter.beer.IBeerFilter;
 
 public class BeerFilterMultivalueMapBuilderTests {
 
-	private BeerFilterMultivalueMapBuilder builder;
+	private FilterMultivalueMapBuilder builder;
 
 	public BeerFilterMultivalueMapBuilderTests() {
 		super();
@@ -24,12 +26,12 @@ public class BeerFilterMultivalueMapBuilderTests {
 
 	@Before
 	public void setUp() {
-		this.builder = new BeerFilterMultivalueMapBuilder();
+		this.builder = new FilterMultivalueMapBuilder();
 	}
 
 	@Test
 	public void testNameFilterAndConvertion() {
-		BeerFilter filter = BeerFilter.createNameFilter("Test");
+		IBeerFilter filter = BeerFilter.createNameFilter("Test");
 		MultivaluedMap<String, String> result = builder.convert(filter);
 		assertTrue(result.containsKey("name"));
 		assertFalse(result.containsKey("abv"));
@@ -48,7 +50,7 @@ public class BeerFilterMultivalueMapBuilderTests {
 
 	@Test
 	public void testNameSortAndConvertion() {
-		BeerFilter filter = BeerFilter.createSortFilter(Sorting.DESC);
+		IBeerFilter filter = BeerFilter.createSortFilter(Sorting.DESC);
 		MultivaluedMap<String, String> result = builder.convert(filter);
 		assertFalse(result.containsKey("name"));
 		assertFalse(result.containsKey("abv"));
@@ -68,7 +70,7 @@ public class BeerFilterMultivalueMapBuilderTests {
 
 	@Test(expected = UnsupportedOperationException.class)
 	public void testIdsException() {
-		BeerFilter filter = BeerFilter.createSortFilter(Sorting.DESC);
+		BeerFilter filter = (BeerFilter) BeerFilter.createSortFilter(Sorting.DESC);
 		filter.setIds(Arrays.asList(new String[] { "1", "11", "111", "1111",
 				"11111", "111111", "1111111", "2", "22", "222", "2222" }));
 		builder.convert(filter);
@@ -76,7 +78,7 @@ public class BeerFilterMultivalueMapBuilderTests {
 
 	@Test
 	public void testIdsAndSorting() {
-		BeerFilter filter = BeerFilter.createSortFilter(Sorting.DESC);
+		BeerFilter filter = (BeerFilter) BeerFilter.createSortFilter(Sorting.DESC);
 		filter.setIds(Arrays.asList(new String[] { "1", "11", "111", "1111" }));
 		
 		Available available = new Available();

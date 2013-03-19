@@ -1,10 +1,10 @@
-package com.sosv.breweryDB.connector.service.resource.filter;
+package com.sosv.breweryDB.connector.service.resource.filter.beer;
 
-import java.util.Collection;
 
 import com.sosv.breweryDB.connector.entity.Available;
 import com.sosv.breweryDB.connector.entity.Glass;
 import com.sosv.breweryDB.connector.entity.Style;
+import com.sosv.breweryDB.connector.service.resource.filter.IBaseFilter;
 
 /**
  * Filter criterias for a beer request
@@ -12,22 +12,7 @@ import com.sosv.breweryDB.connector.entity.Style;
  * @author ssommerf
  * 
  */
-public interface IBeerFilter {
-
-	/**
-	 * All id's to lookup. BreweryDB documentation: ID's of the beers to return
-	 * => Max 10.
-	 * 
-	 * @return
-	 */
-	Collection<String> getIds();
-
-	/**
-	 * The name to lookup. BreweryDB documentation: Name of a beer.
-	 * 
-	 * @return
-	 */
-	String getName();
+public interface IBeerFilter extends IBaseFilter {
 
 	/**
 	 * ABV for a beer. Premium users may use advanced filtering. "+10" will
@@ -97,12 +82,6 @@ public interface IBeerFilter {
 	 */
 	Long getSince();
 
-	/**
-	 * How the results should be sorted.
-	 * @return
-	 */
-	Sorting getSort();
-	
 	/**
 	 * Get beer results with brewery information included.
 	 * @return

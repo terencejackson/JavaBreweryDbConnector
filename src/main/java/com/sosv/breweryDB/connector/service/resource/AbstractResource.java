@@ -18,7 +18,11 @@ package com.sosv.breweryDB.connector.service.resource;
 import javax.ws.rs.core.MultivaluedMap;
 
 import com.sosv.breweryDB.connector.configuration.IBreweryDBConnectorConfiguration;
+import com.sosv.breweryDB.connector.service.ErrorCodes;
+import com.sosv.breweryDB.connector.service.exceptions.ApiKeyNotFoundExeption;
+import com.sosv.breweryDB.connector.service.exceptions.ObjectNotFoundException;
 import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 
@@ -64,8 +68,11 @@ public abstract class AbstractResource {
 	 * 
 	 * @param type
 	 * @return
+	 * @throws ApiKeyNotFoundExeption
+	 * @throws ObjectNotFoundException 
 	 */
-	public <T> T get(String path, T type) {
+	@SuppressWarnings("unchecked")
+	public <T> T get(String path, T type) throws ApiKeyNotFoundExeption, ObjectNotFoundException {
 		MultivaluedMap<String, String> map = new MultivaluedMapImpl();
 		map.add("key", apiKey);
 
@@ -73,27 +80,44 @@ public abstract class AbstractResource {
 		 * Possible risk if T is not the response object. If not it is thrown a
 		 * not deserializable exception
 		 */
-		@SuppressWarnings("unchecked")
-		T result = (T) webResource.path(path).queryParams(map)
-				.get(type.getClass());
+		T result = null;
+		try {
+			result = (T) webResource.path(path).queryParams(map)
+					.get(type.getClass());
+		} catch (UniformInterfaceException e) {
+			handleException(e);
+		}
 		return result;
 	}
-	
-	public <T> T get(T type) {
+
+	private void handleException(UniformInterfaceException e)
+			throws ApiKeyNotFoundExeption, ObjectNotFoundException {
+		int statusCode = e.getResponse().getStatus();
+		if (ErrorCodes.parseErrorCodes(statusCode) == ErrorCodes.API_KEY_NOT_FOUND) {
+			throw new ApiKeyNotFoundExeption();
+		}
+		if (ErrorCodes.parseErrorCodes(statusCode) == ErrorCodes.OBJECT_NOT_FOUND) {
+			throw new ObjectNotFoundException();
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T> T get(T type) throws ApiKeyNotFoundExeption, ObjectNotFoundException {
 		MultivaluedMap<String, String> map = new MultivaluedMapImpl();
 		map.add("key", apiKey);
-		
+
 		/**
 		 * Possible risk if T is not the response object. If not it is thrown a
 		 * not deserializable exception
 		 */
-		@SuppressWarnings("unchecked")
-		T result = (T) webResource.queryParams(map)
-		.get(type.getClass());
+		T result = null;
+		try {
+			result = (T) webResource.queryParams(map).get(type.getClass());
+		} catch (UniformInterfaceException e) {
+			handleException(e);
+		}
 		return result;
 	}
-	
-	
 
 	/**
 	 * Do a get operation with query params to the resource with the given T as
@@ -102,17 +126,24 @@ public abstract class AbstractResource {
 	 * @param map
 	 * @param type
 	 * @return
+	 * @throws ApiKeyNotFoundExeption 
+	 * @throws ObjectNotFoundException 
 	 */
-	public <T> T get(String path, MultivaluedMap<String, String> map, T type) {
+	@SuppressWarnings("unchecked")
+	public <T> T get(String path, MultivaluedMap<String, String> map, T type) throws ApiKeyNotFoundExeption, ObjectNotFoundException {
 		map.add("key", apiKey);
 
 		/**
 		 * Possible risk if T is not the response object. If not it is thrown a
 		 * not deserializable exception
 		 */
-		@SuppressWarnings("unchecked")
-		T result = (T) webResource.path(path).queryParams(map)
-				.get(type.getClass());
+		T result = null;
+		try {
+			result = (T) webResource.path(path).queryParams(map)
+					.get(type.getClass());
+		} catch (UniformInterfaceException e) {
+			handleException(e);
+		}
 		return result;
 	}
 

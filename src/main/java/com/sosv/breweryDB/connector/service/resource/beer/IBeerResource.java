@@ -16,9 +16,9 @@ limitations under the License.
 package com.sosv.breweryDB.connector.service.resource.beer;
 
 import com.sosv.breweryDB.connector.entity.Beer;
-import com.sosv.breweryDB.connector.entity.Page;
+import com.sosv.breweryDB.connector.entity.BeerResultPage;
 import com.sosv.breweryDB.connector.service.exceptions.ApiKeyNotFoundExeption;
-import com.sosv.breweryDB.connector.service.resource.filter.IBeerFilter;
+import com.sosv.breweryDB.connector.service.resource.filter.beer.IBeerFilter;
 
 /**
  * Interface for the beer resource
@@ -31,10 +31,10 @@ public interface IBeerResource {
 	 * Get beers for a page
 	 * @param currentPage The current page => If null no page is requested
 	 * @param filter The filter to apply => if null no filter is applied
-	 * @return The response as {@link Page}
+	 * @return The response as {@link BeerResultPage}
 	 * @throws ApiKeyNotFoundExeption 
 	 */
-	Page getBeers(Number currentPage, IBeerFilter filter) throws ApiKeyNotFoundExeption;
+	BeerResultPage getBeers(Number currentPage, IBeerFilter filter) throws ApiKeyNotFoundExeption;
 	
 	/**
 	 * Get a beer by its id

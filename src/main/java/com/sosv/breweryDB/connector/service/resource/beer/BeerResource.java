@@ -21,14 +21,12 @@ import com.google.inject.Inject;
 import com.sosv.breweryDB.connector.configuration.IBreweryDBConnectorConfiguration;
 import com.sosv.breweryDB.connector.entity.Beer;
 import com.sosv.breweryDB.connector.entity.BeerResult;
-import com.sosv.breweryDB.connector.entity.IErrorResult;
-import com.sosv.breweryDB.connector.entity.Page;
-import com.sosv.breweryDB.connector.service.ErrorCodes;
-import com.sosv.breweryDB.connector.service.Status;
+import com.sosv.breweryDB.connector.entity.BeerResultPage;
 import com.sosv.breweryDB.connector.service.exceptions.ApiKeyNotFoundExeption;
 import com.sosv.breweryDB.connector.service.exceptions.ObjectNotFoundException;
 import com.sosv.breweryDB.connector.service.resource.AbstractResource;
-import com.sosv.breweryDB.connector.service.resource.filter.IBeerFilter;
+import com.sosv.breweryDB.connector.service.resource.filter.FilterMultivalueMapBuilder;
+import com.sosv.breweryDB.connector.service.resource.filter.beer.IBeerFilter;
 import com.sun.jersey.api.client.Client;
 
 /**
@@ -52,26 +50,20 @@ public class BeerResource extends AbstractResource implements IBeerResource {
 	 * com.sosv.breweryDB.connector.service.resource.beer.IBeerResource#getBeers
 	 * (java.lang.Integer)
 	 */
-	public Page getBeers(Number currentPage, IBeerFilter filter) throws ApiKeyNotFoundExeption {
-		MultivaluedMap<String, String> map = new BeerFilterMultivalueMapBuilder()
+	public BeerResultPage getBeers(Number currentPage, IBeerFilter filter)
+			throws ApiKeyNotFoundExeption {
+		MultivaluedMap<String, String> map = new FilterMultivalueMapBuilder()
 				.convert(filter);
-		Page result = null;
+		BeerResultPage result = null;
 		if (currentPage != null) {
 			map.add("p", currentPage.toString());
 		}
-		result = get("beers/", map, new Page());
-		
-		if (Status.SUCCESS.asString().equals(result.getStatus())) {
-			return result;
-		}
 		try {
-			handleErrorResult(result);
+			result = get("beers/", map, new BeerResultPage());
 		} catch (ObjectNotFoundException e) {
-			// Object not found => return null
-			return null;
 		}
-		throw new UnsupportedOperationException("Result "
-				+ result.getErrorMessage() + " unknown");
+
+		return result;
 	}
 
 	/*
@@ -83,37 +75,14 @@ public class BeerResource extends AbstractResource implements IBeerResource {
 	 */
 	@Override
 	public Beer getBeerById(String id) throws ApiKeyNotFoundExeption {
-		BeerResult result = get(String.format("beer/%s/", id), new BeerResult());
-		if (Status.SUCCESS.asString().equals(result.getStatus())) {
-			return result.getData();
-		}
+		Beer result = null;
 		try {
-			handleErrorResult(result);
+			result = get(String.format("beer/%s/", id), new BeerResult())
+					.getData();
 		} catch (ObjectNotFoundException e) {
-			// Object not found => return null
-			return null;
+			// Silently catched is ok => return null;
 		}
-		throw new UnsupportedOperationException("Result " + result.getMessage()
-				+ " unknown");
+		return result;
 	}
 
-	/**
-	 * Handle the result and determine the error of the result
-	 * 
-	 * @param result
-	 * @throws ApiKeyNotFoundExeption
-	 *             If the api key is not found by the service
-	 * @throws ObjectNotFoundException
-	 *             If the object was not found
-	 */
-	private void handleErrorResult(IErrorResult result)
-			throws ApiKeyNotFoundExeption, ObjectNotFoundException {
-		if (ErrorCodes.API_KEY_NOT_FOUND.getMessage().equals(
-				result.getErrorMessage())) {
-			throw new ApiKeyNotFoundExeption();
-		} else if (ErrorCodes.OBJECT_NOT_FOUND.getMessage().equals(
-				result.getErrorMessage())) {
-			throw new ObjectNotFoundException();
-		}
-	}
 }
