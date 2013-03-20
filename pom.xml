@@ -17,8 +17,51 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
+
+			<!-- Github deploy -->
+			<plugin>
+				<groupId>com.github.github</groupId>
+				<artifactId>site-maven-plugin</artifactId>
+				<version>0.7</version>
+				<configuration>
+					<message>Maven artifacts for ${project.version}</message>  <!-- git commit message -->
+					<noJekyll>true</noJekyll>                                  <!-- disable webpage processing -->
+					<outputDirectory>${project.build.directory}/mvn-repo</outputDirectory> <!-- matches distribution management repository url above -->
+					<branch>refs/heads/mvn-repo</branch>                       <!-- remote branch name -->
+					<includes>
+						<include>**/*</include>
+					</includes>
+					<repositoryName>JavaBreweryDbConnector</repositoryName> <!-- github repo name -->
+					<repositoryOwner>terencejackson</repositoryOwner>    <!-- github username -->
+				</configuration>
+				<executions>
+					<!-- run site-maven-plugin's 'site' target as part of the build's normal 
+						'deploy' phase -->
+					<execution>
+						<goals>
+							<goal>site</goal>
+						</goals>
+						<phase>deploy</phase>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+			</plugin>
 		</plugins>
 	</build>
+
+	<scm>
+		<connection>scm:git:git@github.com:terencejackson/JavaBreweryDbConnector.git</connection>
+		<url>scm:git:git@github.com:terencejackson/JavaBreweryDbConnector.git</url>
+		<developerConnection>scm:git:git@github.com:terencejackson/JavaBreweryDbConnector.git</developerConnection>
+	</scm>
+
+	<properties>
+		<github.global.server>github</github.global.server>
+	</properties>
 
 	<licenses>
 		<license>
@@ -27,11 +70,14 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
-	
+
+	<!-- <distributionManagement> <repository> <id>dropbox</id> <url>file:///C:/Users/ssommerf/Dropbox/Public/mvn-repo</url> 
+		</repository> </distributionManagement> -->
 	<distributionManagement>
 		<repository>
-			<id>dropbox</id>
-			<url>file:///C:/Users/ssommerf/Dropbox/Public/mvn-repo</url>
+			<id>internal.repo</id>
+			<name>Temporary Staging Repository</name>
+			<url>file://${project.build.directory}/mvn-repo</url>
 		</repository>
 	</distributionManagement>
 
