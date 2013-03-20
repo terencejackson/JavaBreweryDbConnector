@@ -1,6 +1,8 @@
 package com.sosv.breweryDB.connector.service.resource.filter;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 
@@ -11,11 +13,8 @@ import org.junit.Test;
 
 import com.sosv.breweryDB.connector.entity.Available;
 import com.sosv.breweryDB.connector.entity.Glass;
-import com.sosv.breweryDB.connector.service.resource.filter.FilterMultivalueMapBuilder;
-import com.sosv.breweryDB.connector.service.resource.filter.Sorting;
 import com.sosv.breweryDB.connector.service.resource.filter.beer.BeerFilter;
 import com.sosv.breweryDB.connector.service.resource.filter.beer.BeersFilter;
-import com.sosv.breweryDB.connector.service.resource.filter.beer.IBeerFilter;
 import com.sosv.breweryDB.connector.service.resource.filter.beer.IBeersFilter;
 import com.sosv.breweryDB.connector.service.resource.filter.brewery.BreweryFilter;
 
