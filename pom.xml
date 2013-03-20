@@ -20,6 +20,14 @@
 		</plugins>
 	</build>
 
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	
 	<distributionManagement>
 		<repository>
 			<id>dropbox</id>

@@ -1,10 +1,10 @@
 package com.sosv.breweryDB.connector.service.resource.filter.beer;
 
-import java.util.Collection;
 
 import com.sosv.breweryDB.connector.entity.Available;
 import com.sosv.breweryDB.connector.entity.Glass;
 import com.sosv.breweryDB.connector.entity.Style;
+import com.sosv.breweryDB.connector.service.resource.filter.AbstractBaseFilter;
 import com.sosv.breweryDB.connector.service.resource.filter.Sorting;
 
 /**
@@ -16,31 +16,16 @@ import com.sosv.breweryDB.connector.service.resource.filter.Sorting;
  * @author ssommerf
  * 
  */
-public class BeersFilter extends BeerFilter implements IBeersFilter {
+public class BeersFilter extends AbstractBaseFilter implements IBeersFilter {
 
-	private Collection<String> ids;
-	private String name;
 	private String abv;
 	private String ibu;
 	private Glass glassware;
 	private String srmId;
 	private Available available;
 	private Style style;
-	private Boolean organic;
 	private Integer year;
-	private Long since;
-	private Sorting sort;
-
-	@Override
-	public Collection<String> getIds() {
-		return ids;
-	}
-
-	@Override
-	public String getName() {
-		return name;
-	}
-
+	private Boolean withBreweries;
 	@Override
 	public String getABV() {
 		return abv;
@@ -81,16 +66,6 @@ public class BeersFilter extends BeerFilter implements IBeersFilter {
 		return year;
 	}
 
-	@Override
-	public Long getSince() {
-		return since;
-	}
-
-	@Override
-	public Sorting getSort() {
-		return sort;
-	}
-
 	public String getAbv() {
 		return abv;
 	}
@@ -115,22 +90,6 @@ public class BeersFilter extends BeerFilter implements IBeersFilter {
 		this.srmId = srmId;
 	}
 
-	public Boolean getOrganic() {
-		return organic;
-	}
-
-	public void setOrganic(Boolean organic) {
-		this.organic = organic;
-	}
-
-	public void setIds(Collection<String> ids) {
-		this.ids = ids;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public void setGlassware(Glass glassware) {
 		this.glassware = glassware;
 	}
@@ -145,14 +104,6 @@ public class BeersFilter extends BeerFilter implements IBeersFilter {
 
 	public void setYear(Integer year) {
 		this.year = year;
-	}
-
-	public void setSince(Long since) {
-		this.since = since;
-	}
-
-	public void setSort(Sorting sort) {
-		this.sort = sort;
 	}
 
 	/**
@@ -190,6 +141,15 @@ public class BeersFilter extends BeerFilter implements IBeersFilter {
 		BeersFilter bf = new BeersFilter();
 		bf.setWithBreweries(withBreweries);
 		return bf;
+	}
+
+	public void setWithBreweries(boolean withBreweries) {
+		this.withBreweries = withBreweries;
+	}
+
+	@Override
+	public Boolean withBreweries() {
+		return withBreweries;
 	}
 
 }

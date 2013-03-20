@@ -75,10 +75,14 @@ public class BeerResource extends AbstractResource implements IBeerResource {
 	 * (java.lang.String)
 	 */
 	@Override
-	public Beer getBeerById(String id, IBeerFilter filter) throws ApiKeyNotFoundExeption {
+	public Beer getBeerById(String id, IBeerFilter filter)
+			throws ApiKeyNotFoundExeption {
 		Beer result = null;
+		MultivaluedMap<String, String> map = new FilterMultivalueMapBuilder()
+				.convert(filter);
+
 		try {
-			result = get(String.format("beer/%s/", id), new BeerResult())
+			result = get(String.format("beer/%s/", id), map, new BeerResult())
 					.getData();
 		} catch (ObjectNotFoundException e) {
 			// Silently catched is ok => return null;

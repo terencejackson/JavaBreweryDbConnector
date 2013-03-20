@@ -61,24 +61,10 @@ public interface IBeersFilter extends IBaseFilter, IBeerFilter {
 	Style getStyle();
 
 	/**
-	 * Defines the filter if the beer should be organic
-	 * 
-	 * @return
-	 */
-	Boolean isOrganic();
-
-	/**
 	 * The year to filter
 	 * 
 	 * @return
 	 */
 	Integer getYear();
 
-	/**
-	 * Returns everything that has been updated since that date. Max 30 days. In
-	 * UNIX timestamp format.
-	 * 
-	 * @return
-	 */
-	Long getSince();
 }

@@ -17,8 +17,7 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
  * 
  */
 public class FilterMultivalueMapBuilder {
-	
-	
+
 	public MultivaluedMap<String, String> convert(IBeerFilter filter) {
 		MultivaluedMap<String, String> map = new MultivaluedMapImpl();
 		if (filter == null) {
@@ -29,8 +28,7 @@ public class FilterMultivalueMapBuilder {
 		}
 		return map;
 	}
-	
-	
+
 	/**
 	 * Converts an {@link IBeersFilter} to a {@link MultivaluedMap}. Null values
 	 * are ignored
@@ -45,6 +43,8 @@ public class FilterMultivalueMapBuilder {
 			return map;
 		}
 
+		handleBaseFilter(filter, map);
+
 		if (filter.getABV() != null) {
 			map.add("abv", filter.getABV());
 		}
@@ -57,6 +57,22 @@ public class FilterMultivalueMapBuilder {
 		if (filter.getIBU() != null) {
 			map.add("ibu", filter.getIBU());
 		}
+
+		if (filter.getSRMID() != null) {
+			map.add("srmId", filter.getSRMID());
+		}
+		if (filter.getStyle() != null) {
+			map.add("styleId", filter.getStyle().getId().toString());
+		}
+		if (filter.getYear() != null) {
+			map.add("year", filter.getYear().toString());
+		}
+
+		return map;
+	}
+
+	protected void handleBaseFilter(IBaseFilter filter,
+			MultivaluedMap<String, String> map) {
 		if (filter.getIds() != null && !filter.getIds().isEmpty()) {
 			if (filter.getIds().size() > 10) {
 				throw new UnsupportedOperationException(
@@ -73,22 +89,19 @@ public class FilterMultivalueMapBuilder {
 		if (filter.getSort() != null) {
 			map.add("sort", filter.getSort().getName());
 		}
-		if (filter.getSRMID() != null) {
-			map.add("srmId", filter.getSRMID());
-		}
-		if (filter.getStyle() != null) {
-			map.add("styleId", filter.getStyle().getId().toString());
-		}
-		if (filter.getYear() != null) {
-			map.add("year", filter.getYear().toString());
-		}
-	
 		if (filter.isOrganic() != null) {
 			map.add("isOrganic", filter.isOrganic() ? "Y" : "N");
 		}
-		return map;
 	}
 
+	/**
+	 * Convert an {@link IBreweryFilter} to a {@link MultivaluedMap}. Null
+	 * values are ignored
+	 * 
+	 * @param filter
+	 *            The filter to convert => if null an empty map is returned
+	 * @return The {@link MultivaluedMap} to use for a service request
+	 */
 	public MultivaluedMap<String, String> convert(IBreweryFilter filter) {
 		MultivaluedMap<String, String> map = new MultivaluedMapImpl();
 		if (filter == null) {
@@ -101,8 +114,20 @@ public class FilterMultivalueMapBuilder {
 		return map;
 	}
 
+	/**
+	 * Convert an {@link IBreweriesFilter} to a {@link MultivaluedMap}. Null
+	 * values are ignored
+	 * 
+	 * @param filter
+	 *            The filter to convert => if null an empty map is returned
+	 * @return The {@link MultivaluedMap} to use for a service request
+	 */
 	public MultivaluedMap<String, String> convert(IBreweriesFilter filter) {
 		MultivaluedMap<String, String> map = convert((IBreweryFilter) filter);
+		if (filter == null) {
+			return map;
+		}
+		handleBaseFilter(filter, map);
 		return map;
 	}
 }

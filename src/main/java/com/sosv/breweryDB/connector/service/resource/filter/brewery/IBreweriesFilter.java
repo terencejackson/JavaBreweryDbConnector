@@ -9,5 +9,12 @@ import com.sosv.breweryDB.connector.service.resource.filter.IBaseFilter;
  */
 public interface IBreweriesFilter extends IBreweryFilter, IBaseFilter{
 
-
+	/**
+	 * Year a brewery was established. Format YYYY
+	 * @return The Year a brewery was established. Format YYYY
+	 */
+	Integer getEstablished();
+	
+	
+	
 }

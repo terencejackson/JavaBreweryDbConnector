@@ -34,17 +34,8 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
  */
 public abstract class AbstractResource {
 
-	private String apiKey;
 	private WebResource webResource;
-
-	/**
-	 * Getter for the api key
-	 * 
-	 * @return
-	 */
-	protected String getApiKey() {
-		return apiKey;
-	}
+	private IBreweryDBConnectorConfiguration configuration;
 
 	/**
 	 * Getter for the {@link WebResource}
@@ -60,7 +51,7 @@ public abstract class AbstractResource {
 		super();
 
 		webResource = client.resource("http://api.brewerydb.com/v2/");
-		this.apiKey = configuration.getApiKey();
+		this.configuration = configuration;
 	}
 
 	/**
@@ -75,7 +66,7 @@ public abstract class AbstractResource {
 	public <T> T get(String path, T type) throws ApiKeyNotFoundExeption,
 			ObjectNotFoundException {
 		MultivaluedMap<String, String> map = new MultivaluedMapImpl();
-		map.add("key", apiKey);
+		map.add("key", configuration.getApiKey());
 
 		/**
 		 * Possible risk if T is not the response object. If not it is thrown a
@@ -106,7 +97,7 @@ public abstract class AbstractResource {
 	public <T> T get(T type) throws ApiKeyNotFoundExeption,
 			ObjectNotFoundException {
 		MultivaluedMap<String, String> map = new MultivaluedMapImpl();
-		map.add("key", apiKey);
+		map.add("key", configuration.getApiKey());
 
 		/**
 		 * Possible risk if T is not the response object. If not it is thrown a
@@ -134,7 +125,7 @@ public abstract class AbstractResource {
 	@SuppressWarnings("unchecked")
 	public <T> T get(String path, MultivaluedMap<String, String> map, T type)
 			throws ApiKeyNotFoundExeption, ObjectNotFoundException {
-		map.add("key", apiKey);
+		map.add("key", configuration.getApiKey());
 
 		/**
 		 * Possible risk if T is not the response object. If not it is thrown a

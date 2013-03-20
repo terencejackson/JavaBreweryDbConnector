@@ -96,8 +96,7 @@ public class BreweryDBService implements IBreweryDBService {
 
 	@Override
 	public List<Brewery> getAllBreweries() throws ApiKeyNotFoundExeption {
-		// TODO Auto-generated method stub
-		return null;
+		return breweryService.getAllBreweries();
 	}
 
 	@Override

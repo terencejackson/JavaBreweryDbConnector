@@ -1,10 +1,34 @@
 package com.sosv.breweryDB.connector.service.resource.filter.brewery;
 
-import java.util.Collection;
+import com.sosv.breweryDB.connector.service.resource.filter.AbstractBaseFilter;
 
-import com.sosv.breweryDB.connector.service.resource.filter.Sorting;
+/**
+ * Implementation of the {@link IBreweriesFilter} to provide a filter for breweries requests
+ * @author ssommerf
+ *
+ */
+public class BreweriesFilter extends AbstractBaseFilter implements IBreweriesFilter {
 
-public class BreweriesFilter extends BreweryFilter implements IBreweriesFilter {
+	private Boolean withLocations;
+	private Integer established;
+
+	@Override
+	public Boolean withLocations() {
+		return withLocations;
+	}
+	
+	public void setWithLocations(boolean withLocations) {
+		this.withLocations = withLocations;
+	}
+	
+	@Override
+	public Integer getEstablished() {
+		return established;
+	}
+
+	public void setEstablished(Integer established) {
+		this.established = established;
+	}
 	
 	/**
 	 * Create a filter with only withLocations set to the given value
@@ -17,22 +41,4 @@ public class BreweriesFilter extends BreweryFilter implements IBreweriesFilter {
 		return bf;
 	}
 
-	private Sorting sort;
-	private String name;
-	private Collection<String> ids;
-
-	@Override
-	public Collection<String> getIds() {
-		return ids;
-	}
-
-	@Override
-	public String getName() {
-		return name;
-	}
-
-	@Override
-	public Sorting getSort() {
-		return sort;
-	}
 }

@@ -15,19 +15,34 @@ public interface IBaseFilter {
 	 * 
 	 * @return
 	 */
-	public abstract Collection<String> getIds();
+	Collection<String> getIds();
 
 	/**
 	 * The name to lookup. BreweryDB documentation: Name of a beer.
 	 * 
 	 * @return
 	 */
-	public abstract String getName();
+	String getName();
 
 	/**
 	 * How the results should be sorted.
 	 * @return
 	 */
-	public abstract Sorting getSort();
+	Sorting getSort();
+	
+	/**
+	 * Returns everything that has been updated since that date. Max 30 days. In
+	 * UNIX timestamp format.
+	 * 
+	 * @return
+	 */
+	Long getSince();
+	
+	/**
+	 * Defines the filter if the beer should be organic
+	 * 
+	 * @return
+	 */
+	Boolean isOrganic();
 
 }

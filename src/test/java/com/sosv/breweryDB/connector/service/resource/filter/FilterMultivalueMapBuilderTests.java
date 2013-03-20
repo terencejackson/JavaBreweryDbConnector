@@ -1,4 +1,4 @@
-package com.sosv.breweryDB.connector.service.resource.beer;
+package com.sosv.breweryDB.connector.service.resource.filter;
 
 import static org.junit.Assert.*;
 
@@ -13,14 +13,17 @@ import com.sosv.breweryDB.connector.entity.Available;
 import com.sosv.breweryDB.connector.entity.Glass;
 import com.sosv.breweryDB.connector.service.resource.filter.FilterMultivalueMapBuilder;
 import com.sosv.breweryDB.connector.service.resource.filter.Sorting;
+import com.sosv.breweryDB.connector.service.resource.filter.beer.BeerFilter;
 import com.sosv.breweryDB.connector.service.resource.filter.beer.BeersFilter;
+import com.sosv.breweryDB.connector.service.resource.filter.beer.IBeerFilter;
 import com.sosv.breweryDB.connector.service.resource.filter.beer.IBeersFilter;
+import com.sosv.breweryDB.connector.service.resource.filter.brewery.BreweryFilter;
 
-public class BeerFilterMultivalueMapBuilderTests {
+public class FilterMultivalueMapBuilderTests {
 
 	private FilterMultivalueMapBuilder builder;
 
-	public BeerFilterMultivalueMapBuilderTests() {
+	public FilterMultivalueMapBuilderTests() {
 		super();
 	}
 
@@ -29,6 +32,22 @@ public class BeerFilterMultivalueMapBuilderTests {
 		this.builder = new FilterMultivalueMapBuilder();
 	}
 
+	@Test 
+	public void testBeerFilter(){
+		BeerFilter bf = (BeerFilter) BeerFilter.createWithBreweriesFilter(true);
+		MultivaluedMap<String, String> result = builder.convert(bf);
+		assertTrue(result.containsKey("withBreweries"));
+		assertEquals("Y", result.getFirst("withBreweries"));
+	}
+	
+	@Test 
+	public void testBreweryFilter(){
+		BreweryFilter bf = (BreweryFilter) BreweryFilter.createWithLocationsFilter(true);
+		MultivaluedMap<String, String> result = builder.convert(bf);
+		assertTrue(result.containsKey("withLocations"));
+		assertEquals("Y", result.getFirst("withLocations"));
+	}
+	
 	@Test
 	public void testNameFilterAndConvertion() {
 		IBeersFilter filter = BeersFilter.createNameFilter("Test");
