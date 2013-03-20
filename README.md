@@ -1,4 +1,0 @@
-JavaBreweryDbConnector
-======================
-
-JavaBreweryDbConnector
