@@ -3,9 +3,10 @@
   <groupId>com.tj.brewerydb</groupId>
   <artifactId>connector</artifactId>
   <versioning>
+    <release>0.0.1</release>
     <versions>
-      <version>0.0.1-SNAPSHOT</version>
+      <version>0.0.1</version>
     </versions>
-    <lastUpdated>20130320194515</lastUpdated>
+    <lastUpdated>20130321162847</lastUpdated>
   </versioning>
 </metadata>
