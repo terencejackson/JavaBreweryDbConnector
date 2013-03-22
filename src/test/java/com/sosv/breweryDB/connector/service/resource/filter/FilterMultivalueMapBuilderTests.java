@@ -17,6 +17,7 @@ import com.sosv.breweryDB.connector.service.resource.filter.beer.BeerFilter;
 import com.sosv.breweryDB.connector.service.resource.filter.beer.BeersFilter;
 import com.sosv.breweryDB.connector.service.resource.filter.beer.IBeersFilter;
 import com.sosv.breweryDB.connector.service.resource.filter.brewery.BreweryFilter;
+import com.sosv.breweryDB.connector.service.resource.filter.search.SearchFilter;
 
 public class FilterMultivalueMapBuilderTests {
 
@@ -93,7 +94,49 @@ public class FilterMultivalueMapBuilderTests {
 				"11111", "111111", "1111111", "2", "22", "222", "2222" }));
 		builder.convert(filter);
 	}
+	
+	@Test
+	public void testSearchFilter(){
+		SearchFilter sf = new SearchFilter();
+		sf.setWithAlternateNames(true);
+		sf.setWithBreweries(true);
+		sf.setWithIngredients(true);
+		sf.setWithLocations(true);
+		sf.setWithSocialAccounts(true);
+		
+		MultivaluedMap<String, String> result = builder.convert(sf);
+		assertEquals("Y", result.getFirst("withAlternateNames"));
+		assertEquals("Y", result.getFirst("withBreweries"));
+		assertEquals("Y", result.getFirst("withIngredients"));
+		assertEquals("Y", result.getFirst("withLocations"));
+		assertEquals("Y", result.getFirst("withSocialAccounts"));
+	}
 
+	@Test
+	public void testSearchFilterNothing(){
+		SearchFilter sf = new SearchFilter();
+		
+		MultivaluedMap<String, String> result = builder.convert(sf);
+		assertEquals(0, result.size());
+	}
+	
+	@Test
+	public void testSearchFilterNo(){
+		SearchFilter sf = new SearchFilter();
+		sf.setWithAlternateNames(false);
+		sf.setWithBreweries(false);
+		sf.setWithIngredients(false);
+		sf.setWithLocations(false);
+		sf.setWithSocialAccounts(false);
+		
+		MultivaluedMap<String, String> result = builder.convert(sf);
+		assertEquals("N", result.getFirst("withAlternateNames"));
+		assertEquals("N", result.getFirst("withBreweries"));
+		assertEquals("N", result.getFirst("withIngredients"));
+		assertEquals("N", result.getFirst("withLocations"));
+		assertEquals("N", result.getFirst("withSocialAccounts"));
+	}
+	
 	@Test
 	public void testIdsAndSorting() {
 		BeersFilter filter = (BeersFilter) BeersFilter.createSortFilter(Sorting.DESC);

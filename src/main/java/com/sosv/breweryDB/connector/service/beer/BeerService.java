@@ -18,6 +18,8 @@ package com.sosv.breweryDB.connector.service.beer;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.sosv.breweryDB.connector.entity.beer.Beer;
 import com.sosv.breweryDB.connector.entity.beer.BeerResultPage;
 import com.sosv.breweryDB.connector.service.exceptions.ApiKeyNotFoundExeption;
@@ -34,6 +36,8 @@ import com.google.inject.Inject;
  */
 public class BeerService implements IBeerService {
 
+	private static Logger logger = Logger.getLogger(BeerService.class);
+	
 	private IBeerResource beerResource;
 
 	@Inject
@@ -54,15 +58,20 @@ public class BeerService implements IBeerService {
 	}
 
 	private List<? extends Beer> handlePage(BeerResultPage page,
-			IBeersFilter filter) throws ApiKeyNotFoundExeption {
+			IBeersFilter filter) throws ApiKeyNotFoundExeption {	
 		List<Beer> beers = page.getData();
 		if (beers == null || beers.isEmpty()) {
 			beers = new ArrayList<Beer>();
 		}
-		Number currentPage = page.getCurrentPage();
-		if (currentPage != page.getNumberOfPages()) {
+		
+		int currentPage = page.getCurrentPage().intValue();
+		int numberOfPages = page.getNumberOfPages().intValue();
+		
+		logger.debug("Current page is " + currentPage + ". Number of pages is: " + numberOfPages);
+		
+		if (currentPage < numberOfPages) {
 			beers.addAll(handlePage(this.beerResource.getBeers(
-					currentPage.intValue() + 1, filter), filter));
+					currentPage + 1, filter), filter));
 		}
 
 		return beers;

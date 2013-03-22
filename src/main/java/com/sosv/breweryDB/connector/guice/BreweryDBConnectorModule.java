@@ -37,22 +37,44 @@ import com.sun.jersey.api.client.Client;
  * 
  */
 public class BreweryDBConnectorModule extends AbstractModule {
-
+	
 	@Override
 	protected void configure() {
 		// Bind the client provider
-		bind(Client.class).toProvider(JerseyClientProvider.class);
+		bindClientProvider();
 
 		// Bind resources
-		bind(IBeerResource.class).to(BeerResource.class);
-		bind(IBreweryResource.class).to(BreweryResource.class);
+		bindResources();
 
 		// Bind services
-		bind(IBeerService.class).to(BeerService.class);
-		bind(IBreweryService.class).to(BreweryService.class);
+		bindServices();
 
 		// bind facade
 		bind(IBreweryDBService.class).to(BreweryDBService.class);
+	}
+
+	/**
+	 * Bind the services
+	 */
+	protected void bindServices() {
+		bind(IBeerService.class).to(BeerService.class);
+		bind(IBreweryService.class).to(BreweryService.class);
+	}
+
+	/**
+	 * Bind the resources
+	 */
+	protected void bindResources() {
+		bind(IBeerResource.class).to(BeerResource.class);
+		bind(IBreweryResource.class).to(BreweryResource.class);
+	}
+
+	/**
+	 * Bind the Client provider.
+	 * E.g. bind(Client.class).toProvider(JerseyClientProvider.class)
+	 */
+	protected void bindClientProvider() {
+		bind(Client.class).toProvider(JerseyClientProvider.class);
 	}
 
 }

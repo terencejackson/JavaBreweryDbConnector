@@ -20,6 +20,7 @@ public class JerseyClientProvider implements Provider<Client> {
 		ClientConfig clientConfig = new DefaultClientConfig();
 		clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING,
 				Boolean.TRUE);
+		
 		return Client.create(clientConfig);
 	}
 

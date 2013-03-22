@@ -17,6 +17,8 @@ package com.sosv.breweryDB.connector.service.resource;
 
 import javax.ws.rs.core.MultivaluedMap;
 
+import org.apache.log4j.Logger;
+
 import com.sosv.breweryDB.connector.configuration.IBreweryDBConnectorConfiguration;
 import com.sosv.breweryDB.connector.service.ErrorCodes;
 import com.sosv.breweryDB.connector.service.exceptions.ApiKeyNotFoundExeption;
@@ -36,6 +38,8 @@ public abstract class AbstractResource {
 
 	private WebResource webResource;
 	private IBreweryDBConnectorConfiguration configuration;
+	
+	private static Logger logger = Logger.getLogger(AbstractResource.class);
 
 	/**
 	 * Getter for the {@link WebResource}
@@ -65,6 +69,7 @@ public abstract class AbstractResource {
 	@SuppressWarnings("unchecked")
 	public <T> T get(String path, T type) throws ApiKeyNotFoundExeption,
 			ObjectNotFoundException {
+		logger.debug("Calling get for path " + path + " and type " + type.toString());
 		MultivaluedMap<String, String> map = new MultivaluedMapImpl();
 		map.add("key", configuration.getApiKey());
 
@@ -98,7 +103,7 @@ public abstract class AbstractResource {
 			ObjectNotFoundException {
 		MultivaluedMap<String, String> map = new MultivaluedMapImpl();
 		map.add("key", configuration.getApiKey());
-
+		
 		/**
 		 * Possible risk if T is not the response object. If not it is thrown a
 		 * not deserializable exception
@@ -125,6 +130,8 @@ public abstract class AbstractResource {
 	@SuppressWarnings("unchecked")
 	public <T> T get(String path, MultivaluedMap<String, String> map, T type)
 			throws ApiKeyNotFoundExeption, ObjectNotFoundException {
+		logger.debug("Calling get for path " + path + " and type " + type.toString() + " and map values " + map.values());
+
 		map.add("key", configuration.getApiKey());
 
 		/**

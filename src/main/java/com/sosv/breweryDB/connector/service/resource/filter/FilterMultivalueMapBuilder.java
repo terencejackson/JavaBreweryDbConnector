@@ -7,6 +7,7 @@ import com.sosv.breweryDB.connector.service.resource.filter.beer.IBeerFilter;
 import com.sosv.breweryDB.connector.service.resource.filter.beer.IBeersFilter;
 import com.sosv.breweryDB.connector.service.resource.filter.brewery.IBreweriesFilter;
 import com.sosv.breweryDB.connector.service.resource.filter.brewery.IBreweryFilter;
+import com.sosv.breweryDB.connector.service.resource.filter.search.ISearchFilter;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 /**
@@ -128,6 +129,38 @@ public class FilterMultivalueMapBuilder {
 			return map;
 		}
 		handleBaseFilter(filter, map);
+		return map;
+	}
+
+	/**
+	 * Convert an {@link ISearchFilter} to a {@link MultivaluedMap}. Null
+	 * values are ignored
+	 * 
+	 * @param filter
+	 *            The filter to convert => if null an empty map is returned
+	 * @return The {@link MultivaluedMap} to use for a service request
+	 */
+	public MultivaluedMap<String, String> convert(ISearchFilter filter) {
+		MultivaluedMap<String, String> map = new MultivaluedMapImpl();
+		if (filter == null) {
+			return map;
+		}
+		if(filter.withAlternateNames() != null){
+			map.add("withAlternateNames", filter.withAlternateNames()  ? "Y" : "N");
+		}
+		if(filter.withBreweries() != null){
+			map.add("withBreweries", filter.withBreweries()  ? "Y" : "N");
+		}
+		if(filter.withIngredients() != null){
+			map.add("withIngredients", filter.withIngredients()  ? "Y" : "N");
+		}
+		if(filter.withLocations() != null){
+			map.add("withLocations", filter.withLocations()  ? "Y" : "N");
+		}
+		if(filter.withSocialAccounts() != null){
+			map.add("withSocialAccounts", filter.withSocialAccounts()  ? "Y" : "N");
+		}
+		
 		return map;
 	}
 }

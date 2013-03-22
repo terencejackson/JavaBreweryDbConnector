@@ -152,4 +152,74 @@ public class BeersFilter extends AbstractBaseFilter implements IBeersFilter {
 		return withBreweries;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((abv == null) ? 0 : abv.hashCode());
+		result = prime * result
+				+ ((available == null) ? 0 : available.hashCode());
+		result = prime * result
+				+ ((glassware == null) ? 0 : glassware.hashCode());
+		result = prime * result + ((ibu == null) ? 0 : ibu.hashCode());
+		result = prime * result + ((srmId == null) ? 0 : srmId.hashCode());
+		result = prime * result + ((style == null) ? 0 : style.hashCode());
+		result = prime * result
+				+ ((withBreweries == null) ? 0 : withBreweries.hashCode());
+		result = prime * result + ((year == null) ? 0 : year.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BeersFilter other = (BeersFilter) obj;
+		if (abv == null) {
+			if (other.abv != null)
+				return false;
+		} else if (!abv.equals(other.abv))
+			return false;
+		if (available == null) {
+			if (other.available != null)
+				return false;
+		} else if (!available.equals(other.available))
+			return false;
+		if (glassware == null) {
+			if (other.glassware != null)
+				return false;
+		} else if (!glassware.equals(other.glassware))
+			return false;
+		if (ibu == null) {
+			if (other.ibu != null)
+				return false;
+		} else if (!ibu.equals(other.ibu))
+			return false;
+		if (srmId == null) {
+			if (other.srmId != null)
+				return false;
+		} else if (!srmId.equals(other.srmId))
+			return false;
+		if (style == null) {
+			if (other.style != null)
+				return false;
+		} else if (!style.equals(other.style))
+			return false;
+		if (withBreweries == null) {
+			if (other.withBreweries != null)
+				return false;
+		} else if (!withBreweries.equals(other.withBreweries))
+			return false;
+		if (year == null) {
+			if (other.year != null)
+				return false;
+		} else if (!year.equals(other.year))
+			return false;
+		return true;
+	}
+
 }

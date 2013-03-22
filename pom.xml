@@ -1,8 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.tj.brewerydb</groupId>
 	<artifactId>connector</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2</version>
 	<description>A java breweryDB connector</description>
 
 	<build>
@@ -70,8 +71,6 @@
 		</license>
 	</licenses>
 
-	<!-- <distributionManagement> <repository> <id>dropbox</id> <url>file:///C:/Users/ssommerf/Dropbox/Public/mvn-repo</url> 
-		</repository> </distributionManagement> -->
 	<distributionManagement>
 		<repository>
 			<id>internal.repo</id>
@@ -100,6 +99,11 @@
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>14.0</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.16</version>
 		</dependency>
 
 		<dependency>

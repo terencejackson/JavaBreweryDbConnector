@@ -69,7 +69,7 @@ public class BreweryDBService implements IBreweryDBService {
 	@Override
 	public List<Beer> getAllBeers(IBeersFilter beerFilter)
 			throws ApiKeyNotFoundExeption {
-		return beerService.getAllBeers();
+		return beerService.getAllBeers(beerFilter);
 	}
 
 	@Override

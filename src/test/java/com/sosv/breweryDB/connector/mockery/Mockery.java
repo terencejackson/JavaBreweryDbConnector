@@ -18,6 +18,7 @@ import com.sosv.breweryDB.connector.entity.beer.BeerResult;
 import com.sosv.breweryDB.connector.entity.beer.BeerResultPage;
 import com.sosv.breweryDB.connector.entity.brewery.BreweryResult;
 import com.sosv.breweryDB.connector.entity.brewery.BreweryResultPage;
+import com.sosv.breweryDB.connector.entity.search.BeerSearchResultPage;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientHandlerException;
 import com.sun.jersey.api.client.ClientResponse;
@@ -55,7 +56,41 @@ public class Mockery {
 
 		createGetBeerByIdMock(client, "cBLTUw", webResource, fakeConfig);
 		createGetBreweryByIdMock(client, "Klgom2", webResource, fakeConfig);
+
+		WebResource searchResource = mock(WebResource.class);
+		when(webResource.path("search/")).thenReturn(searchResource);
+		createSearchMock(searchResource, "Haus", 1, fakeConfig);
+		createSearchMock(searchResource, "Haus", 2, fakeConfig);
+		createSearchMock(searchResource, "Haus", 3, fakeConfig);
 		return client;
+	}
+
+	private static void createSearchMock(WebResource searchResource,
+			String query, int page, IBreweryDBConnectorConfiguration fakeConfig) throws UniformInterfaceException, ClientHandlerException, IOException {
+		MultivaluedMap<String, String> map = new MultivaluedMapImpl();
+		map.add("key", fakeConfig.getApiKey());
+		map.add("q", query);
+		map.add("type", "beer");
+		if (page != 1) {
+			map.add("p", page + "");
+		}
+
+		WebResource mock = mock(WebResource.class);
+		when(searchResource.queryParams(map)).thenReturn(mock);
+		when(mock.get(BeerSearchResultPage.class)).thenReturn(
+				createBeerSearchResultPage(query, page));
+	}
+
+	private static BeerSearchResultPage createBeerSearchResultPage(
+			String query, int page) throws IOException {
+		InputStream stream = Mockery.class.getResourceAsStream("/search/search"
+				+ query + "Page" + page + ".json");
+		StringWriter writer = new StringWriter();
+		IOUtils.copy(stream, writer, "UTF-8");
+		String theString = writer.toString();
+
+		ObjectMapper mapper = new ObjectMapper();
+		return mapper.readValue(theString, BeerSearchResultPage.class);
 	}
 
 	public static IBreweryDBConnectorConfiguration createConfigMock() {
