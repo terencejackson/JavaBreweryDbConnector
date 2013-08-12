@@ -54,10 +54,8 @@ public class BeerServiceAsync implements IBeerServiceAsync {
 				+ Thread.currentThread().getId());
 		ExecutorService executor = Executors.newSingleThreadExecutor();
 		try {
-			Future<List<Beer>> future = executor.submit(this.factory
-					.getAllBeersCallable());
-			logger.debug("Successfully called get all beers asnyc");
-			callback.onSuccess(future.get());
+			executor.submit(this.factory
+					.getAllBeersCallable(callback));
 		} catch (Exception e) {
 			logger.error("Error occured calling get all beers asnyc", e);
 			callback.onError(e);
@@ -73,10 +71,9 @@ public class BeerServiceAsync implements IBeerServiceAsync {
 				+ Thread.currentThread().getId());
 		ExecutorService executor = Executors.newSingleThreadExecutor();
 		try {
-			Future<BeerResultPage> future = executor.submit(this.factory
-					.getPagesBeersCallable(pageNumber));
+			executor.submit(this.factory
+					.getPagesBeersCallable(pageNumber, callback));
 			logger.debug("Successfully called get all beers asnyc");
-			callback.onSuccess(future.get());
 		} catch (Exception e) {
 			logger.error("Error occured calling get all beers asnyc", e);
 			callback.onError(e);
@@ -92,27 +89,25 @@ public class BeerServiceAsync implements IBeerServiceAsync {
 				+ Thread.currentThread().getId());
 		ExecutorService executor = Executors.newSingleThreadExecutor();
 		try {
-			Future<List<Beer>> future = executor.submit(this.factory
-					.getAllBeersCallable(beerFilter));
-			logger.debug("Successfully called get all beers asnyc");
-			callback.onSuccess(future.get());
+			executor.submit(this.factory
+					.getAllBeersCallable(beerFilter, callback));
 		} catch (Exception e) {
 			logger.error("Error occured calling get all beers asnyc", e);
 			callback.onError(e);
-		} finally {
+		}finally{
 			executor.shutdown();
 		}
 	}
 
 	@Override
-	public void getPagesBeers(Number pageNumber,
-			IBeersFilter beerFilter, IResultCallback<BeerResultPage> callback) {
+	public void getPagesBeers(Number pageNumber, IBeersFilter beerFilter,
+			IResultCallback<BeerResultPage> callback) {
 		logger.debug("Get pages beers. Current thread: "
 				+ Thread.currentThread().getId());
 		ExecutorService executor = Executors.newSingleThreadExecutor();
 		try {
 			Future<BeerResultPage> future = executor.submit(this.factory
-					.getPagesBeersCallable(pageNumber, beerFilter));
+					.getPagesBeersCallable(pageNumber, beerFilter, callback));
 			logger.debug("Successfully called get all beers asnyc");
 			callback.onSuccess(future.get());
 		} catch (Exception e) {
@@ -129,9 +124,8 @@ public class BeerServiceAsync implements IBeerServiceAsync {
 				+ Thread.currentThread().getId());
 		ExecutorService executor = Executors.newSingleThreadExecutor();
 		try {
-			Future<Beer> future = executor.submit(this.factory
-					.getBeerByIdCallable(id));
-			callback.onSuccess(future.get());
+			executor.submit(this.factory
+					.getBeerByIdCallable(id, callback));
 		} catch (Exception e) {
 			logger.error("Error occured calling get all beers asnyc", e);
 			callback.onError(e);
@@ -147,10 +141,8 @@ public class BeerServiceAsync implements IBeerServiceAsync {
 				+ Thread.currentThread().getId());
 		ExecutorService executor = Executors.newSingleThreadExecutor();
 		try {
-			Future<Beer> future = executor.submit(this.factory
-					.getBeerByIdCallable(id, filter));
-			logger.debug("Successfully called get all beers asnyc");
-			callback.onSuccess(future.get());
+			executor.submit(this.factory
+					.getBeerByIdCallable(id, filter, callback));
 		} catch (Exception e) {
 			logger.error("Error occured calling get all beers asnyc", e);
 			callback.onError(e);

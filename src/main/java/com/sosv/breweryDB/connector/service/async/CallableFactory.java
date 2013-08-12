@@ -44,34 +44,34 @@ public class CallableFactory implements ICallableFactory {
 	}
 
 	@Override
-	public Callable<List<Beer>> getAllBeersCallable() {
-		return new GetAllBeersCallable(beerService);
+	public Callable<List<Beer>> getAllBeersCallable(IResultCallback<List<Beer>> callback) {
+		return new GetAllBeersCallable(beerService, callback);
 	}
 
 	@Override
-	public Callable<BeerResultPage> getPagesBeersCallable(Number pageNumber) {
-		return new GetPagesBeersCallable(beerService, pageNumber);
+	public Callable<BeerResultPage> getPagesBeersCallable(Number pageNumber, IResultCallback<BeerResultPage> callback) {
+		return new GetPagesBeersCallable(beerService, pageNumber, callback);
 	}
 
 	@Override
-	public Callable<List<Beer>> getAllBeersCallable(IBeersFilter beerFilter) {
-		return new GetAllBeersCallable(beerService, beerFilter);
+	public Callable<List<Beer>> getAllBeersCallable(IBeersFilter beerFilter, IResultCallback<List<Beer>> callback) {
+		return new GetAllBeersCallable(beerService, beerFilter, callback);
 	}
 
 	@Override
 	public Callable<BeerResultPage> getPagesBeersCallable(Number pageNumber,
-			IBeersFilter beerFilter) {
-		 return new GetPagesBeersCallable(beerService, beerFilter, pageNumber);
+			IBeersFilter beerFilter, IResultCallback<BeerResultPage> callback) {
+		 return new GetPagesBeersCallable(beerService, beerFilter, pageNumber, callback);
 	}
 
 	@Override
-	public Callable<Beer> getBeerByIdCallable(String id, IBeerFilter filter) {
-		return new GetBeerByIdCallable(beerService, id, filter);
+	public Callable<Beer> getBeerByIdCallable(String id, IBeerFilter filter, IResultCallback<Beer> callback) {
+		return new GetBeerByIdCallable(beerService, id, filter, callback);
 	}
 
 	@Override
-	public Callable<Beer> getBeerByIdCallable(String id) {
-		return new GetBeerByIdCallable(beerService, id);
+	public Callable<Beer> getBeerByIdCallable(String id, IResultCallback<Beer> callback) {
+		return new GetBeerByIdCallable(beerService, id, callback);
 	}
 
 }

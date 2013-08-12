@@ -142,9 +142,12 @@ public class BeerServiceAsyncTests {
 	}
 
 	@Test
-	public void testGetPage1() {
+	public void testGetPage1() throws InterruptedException {
 		BeerResultPageCallback callback = new BeerResultPageCallback();
 		beerServiceAsync.getPagesBeers(null, callback);
+		
+		lock.await(2000, TimeUnit.MILLISECONDS);
+		
 		BeerResultPage result = callback.getResult();
 		assertEquals(1, result.getCurrentPage());
 		assertNotNull(result.getData());
@@ -153,10 +156,13 @@ public class BeerServiceAsyncTests {
 	}
 
 	@Test
-	public void testGetPage1WithBreweries() {
+	public void testGetPage1WithBreweries() throws InterruptedException {
 		BeerResultPageCallback callback = new BeerResultPageCallback();
 		beerServiceAsync.getPagesBeers(null,
 				BeersFilter.createWithBreweriesFilter(true), callback);
+		
+		lock.await(2000, TimeUnit.MILLISECONDS);
+		
 		BeerResultPage result = callback.getResult();
 		assertEquals(1, result.getCurrentPage());
 		assertNotNull(result.getData());
@@ -166,9 +172,12 @@ public class BeerServiceAsyncTests {
 	}
 
 	@Test
-	public void testGetPage2() {
+	public void testGetPage2() throws InterruptedException {
 		BeerResultPageCallback callback = new BeerResultPageCallback();
 		beerServiceAsync.getPagesBeers(2, callback);
+		
+		lock.await(2000, TimeUnit.MILLISECONDS);
+		
 		BeerResultPage result = callback.getResult();
 		assertEquals(2, result.getCurrentPage());
 		assertNotNull(result.getData());
@@ -202,17 +211,23 @@ public class BeerServiceAsyncTests {
 	}
 	
 	@Test
-	public void testGetById() throws ApiKeyNotFoundExeption {
+	public void testGetById() throws ApiKeyNotFoundExeption, InterruptedException {
 		BeerResultCallback callback = new BeerResultCallback();;
 		beerServiceAsync.getBeerById("cBLTUw", callback);
+		
+		lock.await(2000, TimeUnit.MILLISECONDS);
+		
 		assertNotNull(callback.getResult());
 		assertNull(callback.getError());
 	}
 
 	@Test
-	public void testGetByIdNull() throws ApiKeyNotFoundExeption {
-		BeerResultCallback callback = new BeerResultCallback();;
+	public void testGetByIdNull() throws ApiKeyNotFoundExeption, InterruptedException {
+		BeerResultCallback callback = new BeerResultCallback();	
 		beerServiceAsync.getBeerById("cBLTUwx", callback);
+		
+		lock.await(2000, TimeUnit.MILLISECONDS);
+		
 		assertNull(callback.getResult());
 		assertNull(callback.getError());
 	}

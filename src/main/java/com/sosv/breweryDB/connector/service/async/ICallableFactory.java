@@ -30,15 +30,16 @@ import com.sosv.breweryDB.connector.service.resource.filter.beer.IBeersFilter;
  */
 public interface ICallableFactory {
 
-	Callable<List<Beer>> getAllBeersCallable();
+	Callable<List<Beer>> getAllBeersCallable(IResultCallback<List<Beer>> callback);
 
-	Callable<BeerResultPage> getPagesBeersCallable(Number pageNumber);
+	Callable<BeerResultPage> getPagesBeersCallable(Number pageNumber, IResultCallback<BeerResultPage> callback);
 
-	Callable<List<Beer>> getAllBeersCallable(IBeersFilter beerFilter);
+	Callable<List<Beer>> getAllBeersCallable(IBeersFilter beerFilter, IResultCallback<List<Beer>> callback);
 
-	Callable<BeerResultPage> getPagesBeersCallable(Number pageNumber, IBeersFilter beerFilter);
+	Callable<BeerResultPage> getPagesBeersCallable(Number pageNumber, IBeersFilter beerFilter, IResultCallback<BeerResultPage> callback);
 
-	Callable<Beer> getBeerByIdCallable(String id, IBeerFilter filter);
+	Callable<Beer> getBeerByIdCallable(String id, IBeerFilter filter, IResultCallback<Beer> callback);
 
-	Callable<Beer> getBeerByIdCallable(String id);
+	Callable<Beer> getBeerByIdCallable(String id, IResultCallback<Beer> callback);
+	
 }
