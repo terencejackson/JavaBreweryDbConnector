@@ -161,4 +161,16 @@ public class Beer{
 	public void setUpdateDate(String updateDate){
 		this.updateDate = updateDate;
 	}
+
+	@Override
+	public String toString() {
+		return "Beer [abv=" + abv + ", available=" + available
+				+ ", availableId=" + availableId + ", createDate=" + createDate
+				+ ", description=" + description + ", glass=" + glass
+				+ ", glasswareId=" + glasswareId + ", id=" + id
+				+ ", isOrganic=" + isOrganic + ", name=" + name + ", status="
+				+ status + ", statusDisplay=" + statusDisplay + ", style="
+				+ style + ", styleId=" + styleId + ", updateDate=" + updateDate
+				+ ", breweries=" + breweries + "]";
+	}
 }

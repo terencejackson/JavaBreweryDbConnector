@@ -16,12 +16,8 @@ limitations under the License.
 package com.sosv.breweryDB.connector.guice;
 
 import com.google.inject.AbstractModule;
-import com.sosv.breweryDB.connector.service.BreweryDBService;
-import com.sosv.breweryDB.connector.service.IBreweryDBService;
-import com.sosv.breweryDB.connector.service.brewery.BreweryService;
-import com.sosv.breweryDB.connector.service.brewery.IBreweryService;
-import com.sosv.breweryDB.connector.service.beer.BeerService;
-import com.sosv.breweryDB.connector.service.beer.IBeerService;
+import com.sosv.breweryDB.connector.configuration.IBreweryDBConnectorConfiguration;
+import com.sosv.breweryDB.connector.configuration.PropertyBreweryDBConnectorConfiguration;
 import com.sosv.breweryDB.connector.service.provider.JerseyClientProvider;
 import com.sosv.breweryDB.connector.service.resource.beer.BeerResource;
 import com.sosv.breweryDB.connector.service.resource.beer.IBeerResource;
@@ -36,30 +32,25 @@ import com.sun.jersey.api.client.Client;
  * @author Sven
  * 
  */
-public class BreweryDBConnectorModule extends AbstractModule {
-	
+public class BreweryDBBaseModule extends AbstractModule {
+
 	@Override
 	protected void configure() {
+		bindPropertyConfiguration();
+		
 		// Bind the client provider
 		bindClientProvider();
 
 		// Bind resources
 		bindResources();
-
-		// Bind services
-		bindServices();
-
-		// bind facade
-		bind(IBreweryDBService.class).to(BreweryDBService.class);
 	}
 
-	/**
-	 * Bind the services
-	 */
-	protected void bindServices() {
-		bind(IBeerService.class).to(BeerService.class);
-		bind(IBreweryService.class).to(BreweryService.class);
+
+	private void bindPropertyConfiguration() {
+		bind(IBreweryDBConnectorConfiguration.class).to(
+				PropertyBreweryDBConnectorConfiguration.class);
 	}
+
 
 	/**
 	 * Bind the resources
@@ -70,8 +61,8 @@ public class BreweryDBConnectorModule extends AbstractModule {
 	}
 
 	/**
-	 * Bind the Client provider.
-	 * E.g. bind(Client.class).toProvider(JerseyClientProvider.class)
+	 * Bind the Client provider. E.g.
+	 * bind(Client.class).toProvider(JerseyClientProvider.class)
 	 */
 	protected void bindClientProvider() {
 		bind(Client.class).toProvider(JerseyClientProvider.class);
