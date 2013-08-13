@@ -37,7 +37,7 @@ import com.google.inject.Inject;
 public class BeerService implements IBeerService {
 
 	private static Logger logger = Logger.getLogger(BeerService.class);
-	
+
 	private IBeerResource beerResource;
 
 	@Inject
@@ -58,22 +58,24 @@ public class BeerService implements IBeerService {
 	}
 
 	private List<? extends Beer> handlePage(BeerResultPage page,
-			IBeersFilter filter) throws ApiKeyNotFoundExeption {	
+			IBeersFilter filter) throws ApiKeyNotFoundExeption {
 		List<Beer> beers = page.getData();
 		if (beers == null || beers.isEmpty()) {
 			beers = new ArrayList<Beer>();
-		}
-		
-		int currentPage = page.getCurrentPage().intValue();
-		int numberOfPages = page.getNumberOfPages().intValue();
-		
-		logger.debug("Current page is " + currentPage + ". Number of pages is: " + numberOfPages);
-		
-		if (currentPage < numberOfPages) {
-			beers.addAll(handlePage(this.beerResource.getBeers(
-					currentPage + 1, filter), filter));
-		}
+		} else {
 
+			int currentPage = page.getCurrentPage().intValue();
+			int numberOfPages = page.getNumberOfPages().intValue();
+
+			logger.debug("Current page is " + currentPage
+					+ ". Number of pages is: " + numberOfPages);
+
+			if (currentPage < numberOfPages) {
+				beers.addAll(handlePage(
+						this.beerResource.getBeers(currentPage + 1, filter),
+						filter));
+			}
+		}
 		return beers;
 	}
 
@@ -102,7 +104,8 @@ public class BeerService implements IBeerService {
 	}
 
 	@Override
-	public Beer getBeerById(String id, IBeerFilter filter) throws ApiKeyNotFoundExeption {
+	public Beer getBeerById(String id, IBeerFilter filter)
+			throws ApiKeyNotFoundExeption {
 		return beerResource.getBeerById(id, filter);
 	}
 
