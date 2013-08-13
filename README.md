@@ -55,7 +55,7 @@ Example usage:
 		}
 	});
 
-asyncService.getBeerById("cBLTUw", new IResultCallback<Beer>() {
+	asyncService.getBeerById("cBLTUw", new IResultCallback<Beer>() {
 
 	public void onSuccess(Beer result) {
 		System.out.println("Async:" + result);
