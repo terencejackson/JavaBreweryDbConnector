@@ -55,19 +55,19 @@ Example usage:
 		}
 	});
 
-asyncService.getBeerById("cBLTUw", new IResultCallback<Beer>() {
+	asyncService.getBeerById("cBLTUw", new IResultCallback<Beer>() {
 
-	public void onSuccess(Beer result) {
-		System.out.println("Async:" + result);
-	}
-
-	public void onError(Throwable throwable) {
-		throwable.printStackTrace();
-	}
-});
-
-System.out.println("Done");
-    
+		public void onSuccess(Beer result) {
+			System.out.println("Async:" + result);
+		}
+	
+		public void onError(Throwable throwable) {
+			throwable.printStackTrace();
+		}
+	});
+	
+	System.out.println("Done");
+	    
 ## Versions
 ### 0.0.3-SNAPSHOT (2013-08-13)
 * Asynchronous beer service
