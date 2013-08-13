@@ -24,6 +24,7 @@ You can now get the jar with:
     </dependency>
     
 Example usage:
+
 	System.out.println("start");
 	
 	// Create the injector, the async module creates the sync and async object
