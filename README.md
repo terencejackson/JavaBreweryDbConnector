@@ -65,7 +65,7 @@ Example usage:
 			throwable.printStackTrace();
 		}
 	});
-	
+	 
 	System.out.println("Done");
 	    
 ## Versions
