@@ -20,7 +20,7 @@ You can now get the jar with:
     <dependency>
     	<groupId>com.tj.brewerydb</groupId>
     	<artifactId>connector</artifactId>
-    	<version>0.0.3-SNAPSHOT</version>
+    	<version>0.0.3</version>
     </dependency>
     
 Example usage:
@@ -70,7 +70,7 @@ Example usage:
 	System.out.println("Done");
 	    
 ## Versions
-### 0.0.3-SNAPSHOT (2013-08-13)
+### 0.0.3 (2013-08-13)
 * Asynchronous beer service
 * Asynchronous guice module
 * Synchronous guice module
