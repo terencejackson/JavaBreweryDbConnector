@@ -9,6 +9,7 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import com.sosv.breweryDB.connector.entity.Available;
 import com.sosv.breweryDB.connector.entity.Glass;
+import com.sosv.breweryDB.connector.entity.Images;
 import com.sosv.breweryDB.connector.entity.Style;
 import com.sosv.breweryDB.connector.entity.brewery.Brewery;
 
@@ -62,6 +63,9 @@ public class Beer{
 	
 	@XmlElement
 	private List<Brewery> breweries;
+	
+	@XmlElement
+	private Images labels;
 
  	public List<Brewery> getBreweries() {
 		return breweries;
@@ -160,6 +164,14 @@ public class Beer{
 	}
 	public void setUpdateDate(String updateDate){
 		this.updateDate = updateDate;
+	}
+	
+	public Images getLabels() {
+		return labels;
+	}
+
+	public void setLabels(Images images) {
+		this.labels = images;
 	}
 
 	@Override

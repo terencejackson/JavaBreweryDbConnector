@@ -36,6 +36,7 @@ import com.sosv.breweryDB.connector.mockery.Mockery;
 import com.sosv.breweryDB.connector.service.beer.BeerService;
 import com.sosv.breweryDB.connector.service.beer.IBeerService;
 import com.sosv.breweryDB.connector.service.exceptions.ApiKeyNotFoundExeption;
+import com.sosv.breweryDB.connector.service.provider.JerseyClientProvider;
 import com.sosv.breweryDB.connector.service.resource.filter.beer.BeersFilter;
 import com.sun.jersey.api.client.Client;
 
@@ -121,6 +122,13 @@ public class BeerResourceTests {
 		Beer result = br.getBeerById("cBLTUw", null);
 		assertNotNull(result);
 	}
+
+//	@Test
+//	public void testGetByIdReal() throws ApiKeyNotFoundExeption {
+//		IBeerResource br = new BeerResource(configuration, new JerseyClientProvider().get());
+//		Beer result = br.getBeerById("FoPVhW", null);
+//		assertNotNull(result);
+//	}
 
 	@Test
 	public void testGetByIdNull() throws ApiKeyNotFoundExeption {

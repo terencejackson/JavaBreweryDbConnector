@@ -45,9 +45,10 @@ public class BreweryService implements IBreweryService {
 			beers = new ArrayList<Brewery>();
 		}
 		Number currentPage = page.getCurrentPage();
-		if (currentPage != page.getNumberOfPages()) {
+		int currentPageAsInt = currentPage.intValue();
+		if (currentPageAsInt < page.getNumberOfPages().intValue()) {
 			beers.addAll(handlePage(this.breweryResource.getBreweries(
-					currentPage.intValue() + 1, filter), filter));
+					currentPageAsInt + 1, filter), filter));
 		}
 
 		return beers;
