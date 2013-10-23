@@ -15,6 +15,7 @@ import com.sosv.breweryDB.connector.configuration.IBreweryDBConnectorConfigurati
 import com.sosv.breweryDB.connector.entity.beer.Beer;
 import com.sosv.breweryDB.connector.mockery.Mockery;
 import com.sosv.breweryDB.connector.service.exceptions.ApiKeyNotFoundExeption;
+import com.sosv.breweryDB.connector.service.provider.JerseyClientProvider;
 import com.sosv.breweryDB.connector.service.search.ISearchService;
 import com.sosv.breweryDB.connector.service.search.SearchService;
 import com.sun.jersey.api.client.Client;
@@ -47,5 +48,27 @@ public class SearchTests {
 		assertNotNull(result);
 		assertEquals(150, result.size());
 	}
-
+	
+	@Test
+	public void testByUPCSuccess() throws ApiKeyNotFoundExeption{
+		ISearchResource searchResource = new SearchResource(fakeConfig, client);
+		ISearchService service = new SearchService(searchResource);
+		List<Beer> result = service.searchBeersByUpc("606905008303");
+		assertNotNull(result);
+		assertEquals(1, result.size());
+	}
+		
+	@Test(expected=IllegalArgumentException.class)
+	public void testUPCNotValid1() throws ApiKeyNotFoundExeption{
+		ISearchResource searchResource = new SearchResource(fakeConfig, client);
+		ISearchService service = new SearchService(searchResource);
+		service.searchBeersByUpc("A06905008304");
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testUPCNotValid2() throws ApiKeyNotFoundExeption{
+		ISearchResource searchResource = new SearchResource(fakeConfig, client);
+		ISearchService service = new SearchService(searchResource);
+		service.searchBeersByUpc("60690500830");
+	}
 }

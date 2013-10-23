@@ -59,14 +59,41 @@ public class Mockery {
 
 		WebResource searchResource = mock(WebResource.class);
 		when(webResource.path("search/")).thenReturn(searchResource);
+		when(webResource.path("search/upc")).thenReturn(searchResource);
 		createSearchMock(searchResource, "Haus", 1, fakeConfig);
 		createSearchMock(searchResource, "Haus", 2, fakeConfig);
 		createSearchMock(searchResource, "Haus", 3, fakeConfig);
+		createSearchByUPCMock(searchResource, "606905008303", fakeConfig);
 		return client;
 	}
 
+	private static void createSearchByUPCMock(WebResource searchResource,
+			String upc, IBreweryDBConnectorConfiguration fakeConfig) throws UniformInterfaceException, ClientHandlerException, IOException {
+		MultivaluedMap<String, String> map = new MultivaluedMapImpl();
+		map.add("code", upc);
+		map.add("key", fakeConfig.getApiKey());
+		
+		WebResource mock = mock(WebResource.class);
+		when(searchResource.queryParams(map)).thenReturn(mock);
+		when(mock.get(BeerSearchResultPage.class)).thenReturn(
+				createBeerSearchResultPageForUPC(upc));
+	}
+	
+	private static BeerSearchResultPage createBeerSearchResultPageForUPC(
+			String upc) throws IOException {
+		InputStream stream = Mockery.class.getResourceAsStream("/search/searchByUPC" + upc + ".json");
+		StringWriter writer = new StringWriter();
+		IOUtils.copy(stream, writer, "UTF-8");
+		String theString = writer.toString();
+
+		ObjectMapper mapper = new ObjectMapper();
+		return mapper.readValue(theString, BeerSearchResultPage.class);
+	}
+
 	private static void createSearchMock(WebResource searchResource,
-			String query, int page, IBreweryDBConnectorConfiguration fakeConfig) throws UniformInterfaceException, ClientHandlerException, IOException {
+			String query, int page, IBreweryDBConnectorConfiguration fakeConfig)
+			throws UniformInterfaceException, ClientHandlerException,
+			IOException {
 		MultivaluedMap<String, String> map = new MultivaluedMapImpl();
 		map.add("key", fakeConfig.getApiKey());
 		map.add("q", query);

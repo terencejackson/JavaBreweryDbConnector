@@ -2,11 +2,13 @@ package com.sosv.breweryDB.connector.service.search;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 
 import com.google.common.base.Preconditions;
 import com.google.inject.Inject;
+import com.sosv.breweryDB.connector.configuration.BreweryDBConnectorConstants;
 import com.sosv.breweryDB.connector.entity.beer.Beer;
 import com.sosv.breweryDB.connector.entity.search.BeerSearchResultPage;
 import com.sosv.breweryDB.connector.service.exceptions.ApiKeyNotFoundExeption;
@@ -21,7 +23,7 @@ import com.sosv.breweryDB.connector.service.resource.search.ISearchResource;
  */
 public class SearchService implements ISearchService {
 
-	private static Logger logger = Logger.getLogger(SearchService.class);
+	private static final Logger logger = Logger.getLogger(SearchService.class);
 
 	private ISearchResource searchResource;
 
@@ -85,4 +87,34 @@ public class SearchService implements ISearchService {
 		return searchBeers(query, null);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.sosv.breweryDB.connector.service.search.ISearchService#searchBeersByUpc
+	 * (java.lang.String)
+	 */
+	@Override
+	public List<Beer> searchBeersByUpc(String upc)
+			throws ApiKeyNotFoundExeption {
+		return searchBeersByUpc(upc, null);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see com.sosv.breweryDB.connector.service.search.ISearchService#searchBeersByUpc(java.lang.String, com.sosv.breweryDB.connector.service.resource.filter.search.ISearchFilter)
+	 */
+	@Override
+	public List<Beer> searchBeersByUpc(String upc, ISearchFilter filter)
+			throws ApiKeyNotFoundExeption {
+		logger.debug("Search for a upc: " + upc);
+		Pattern p = Pattern.compile(BreweryDBConnectorConstants.UPC_REGEX);
+		if (!p.matcher(upc).matches()) {
+			logger.debug("UPC is not valid");
+			throw new IllegalArgumentException(
+					"UPC is not valid. It must be well formed: " + BreweryDBConnectorConstants.UPC_REGEX);
+		}
+		logger.debug("UPC is valid");
+		return this.searchResource.searchByUPC(upc, filter);
+	}
 }

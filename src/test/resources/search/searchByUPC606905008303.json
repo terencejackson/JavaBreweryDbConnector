@@ -1,0 +1,121 @@
+{
+  "currentPage":1,
+  "numberOfPages":1,
+  "totalResults":1,
+  "data":[
+    {
+      "id":"RVOBIF",
+      "name":"Flower Power",
+      "description":"Enjoy the clover honey hue and tropical nose. Simultaneously Punchy and soothing with a big body and a finish that boasts pineapple and grapefruit. Flower power is hopped and dry-hopped five different times throughout the brewing and fermentation process.",
+      "abv":"8",
+      "ibu":"75",
+      "glasswareId":5,
+      "availableId":1,
+      "styleId":30,
+      "isOrganic":"N",
+      "labels":{
+        "icon":"https:\/\/s3.amazonaws.com\/brewerydbapi\/beer\/RVOBIF\/upload_vaoAoN-icon.png",
+        "medium":"https:\/\/s3.amazonaws.com\/brewerydbapi\/beer\/RVOBIF\/upload_vaoAoN-medium.png",
+        "large":"https:\/\/s3.amazonaws.com\/brewerydbapi\/beer\/RVOBIF\/upload_vaoAoN-large.png"
+      },
+      "status":"verified",
+      "statusDisplay":"Verified",
+      "foodPairings":"Accentuates hot and spicy cuisine like Indian and Thai curries or Mexican.\r\n\r\nStrong cheeses like Stilton, Danish Blue or Gorgonzola.",
+      "createDate":"2012-01-03 02:43:13",
+      "updateDate":"2013-10-07 11:55:32",
+      "glass":{
+        "id":5,
+        "name":"Pint",
+        "createDate":"2012-01-03 02:41:33"
+      },
+      "available":{
+        "id":1,
+        "name":"Year Round",
+        "description":"Available year round as a staple beer."
+      },
+      "style":{
+        "id":30,
+        "categoryId":3,
+        "category":{
+          "id":3,
+          "name":"North American Origin Ales",
+          "createDate":"2012-03-21 20:06:45"
+        },
+        "name":"American-Style India Pale Ale",
+        "description":"American-style India pale ales are perceived to have medium-high to intense hop bitterness, flavor and aroma with medium-high alcohol content. The style is further characterized by floral, fruity, citrus-like, piney, resinous, or sulfur-like American-variety hop character. Note that one or more of these American-variety hop characters is the perceived end, but the hop characters may be a result of the skillful use of hops of other national origins. The use of water with high mineral content results in a crisp, dry beer. This pale gold to deep copper-colored ale has a full, flowery hop aroma and may have a strong hop flavor (in addition to the perception of hop bitterness). India pale ales possess medium maltiness which contributes to a medium body. Fruity-ester flavors and aromas are moderate to very strong. Diacetyl can be absent or may be perceived at very low levels. Chill and\/or hop haze is allowable at cold temperatures. (English and citrus-like American hops are considered enough of a distinction justifying separate American-style IPA and English-style IPA categories or subcategories. Hops of other origins may be used for bitterness or approximating traditional American or English character. See English-style India Pale Ale",
+        "ibuMin":"50",
+        "ibuMax":"70",
+        "abvMin":"6.3",
+        "abvMax":"7.5",
+        "srmMin":"6",
+        "srmMax":"14",
+        "ogMin":"1.06",
+        "fgMin":"1.012",
+        "fgMax":"1.018",
+        "createDate":"2012-03-21 20:06:45"
+      },
+      "fluidSize":{
+        "id":6,
+        "volume":"pack",
+        "volumeDisplay":"Pack",
+        "quantity":"6",
+        "createDate":"2012-01-03 02:41:33"
+      },
+      "breweries":[
+        {
+          "id":"iGWHI1",
+          "name":"Ithaca Beer Company",
+          "description":"Ithaca Beer Co.,established in 1998, has a mission to brew delicious beers for the purpose of making life more enjoyable. We strive to make this company better and build our brand name and good reputation among our customers.\r\n\r\nOver the last decade we have worked hard doing just that, and we have had lots of fun in the process!  From our friendly staff to the award-winning beer to our community outreach, Ithaca Beer continues to brew beers for the purpose of making your simple moments worthwhile.  Take a moment to look around our brand new site and learn about more about Ithaca Beer as a company, the beers we brew, and our involvement in Ithaca, NY.",
+          "website":"http:\/\/ithacabeer.com\/",
+          "established":"1998",
+          "isOrganic":"N",
+          "images":{
+            "icon":"https:\/\/s3.amazonaws.com\/brewerydbapi\/brewery\/iGWHI1\/upload_a2VTid-icon.png",
+            "medium":"https:\/\/s3.amazonaws.com\/brewerydbapi\/brewery\/iGWHI1\/upload_a2VTid-medium.png",
+            "large":"https:\/\/s3.amazonaws.com\/brewerydbapi\/brewery\/iGWHI1\/upload_a2VTid-large.png"
+          },
+          "status":"verified",
+          "statusDisplay":"Verified",
+          "createDate":"2012-01-03 02:41:58",
+          "updateDate":"2013-02-19 11:45:25",
+          "locations":[
+            {
+              "id":"8khP2P",
+              "name":"Ithaca Beer Co.",
+              "streetAddress":"122 Ithaca Beer Dr.",
+              "locality":"Ithaca",
+              "region":"New York",
+              "postalCode":"14850",
+              "phone":"607-273-0766",
+              "website":"http:\/\/ithacabeer.com\/",
+              "hoursOfOperation":"Wed - Sun\r\n12pm - 9pm",
+              "latitude":42.4144515,
+              "longitude":-76.5343016,
+              "isPrimary":"Y",
+              "inPlanning":"N",
+              "isClosed":"N",
+              "openToPublic":"Y",
+              "locationType":"micro",
+              "locationTypeDisplay":"Micro Brewery",
+              "countryIsoCode":"US",
+              "yearOpened":"1998",
+              "status":"verified",
+              "statusDisplay":"Verified",
+              "createDate":"2012-01-03 02:41:58",
+              "updateDate":"2013-08-08 16:20:42",
+              "country":{
+                "isoCode":"US",
+                "name":"UNITED STATES",
+                "displayName":"United States",
+                "isoThree":"USA",
+                "numberCode":840,
+                "createDate":"2012-01-03 02:41:33"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "status":"success"
+}

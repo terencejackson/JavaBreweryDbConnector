@@ -1,10 +1,13 @@
 package com.sosv.breweryDB.connector.service.resource.search;
 
+import java.util.List;
+
 import javax.ws.rs.core.MultivaluedMap;
 
 import com.google.common.base.Preconditions;
 import com.google.inject.Inject;
 import com.sosv.breweryDB.connector.configuration.IBreweryDBConnectorConfiguration;
+import com.sosv.breweryDB.connector.entity.beer.Beer;
 import com.sosv.breweryDB.connector.entity.search.BeerSearchResultPage;
 import com.sosv.breweryDB.connector.service.exceptions.ApiKeyNotFoundExeption;
 import com.sosv.breweryDB.connector.service.exceptions.ObjectNotFoundException;
@@ -42,6 +45,26 @@ public class SearchResource extends AbstractResource implements ISearchResource 
 		}
 		
 		return  result;
+	}
+
+	@Override
+	public List<Beer> searchByUPC(String upc, ISearchFilter filter)
+			throws ApiKeyNotFoundExeption {
+		Preconditions.checkArgument(upc != null, "query must not be null");
+		
+		MultivaluedMap<String, String> map = new FilterMultivalueMapBuilder().convert(filter);
+		map.add("code", upc);
+		
+		BeerSearchResultPage result = null;
+		try {
+			result = get("search/upc", map , new BeerSearchResultPage());
+		} catch (ObjectNotFoundException e) {
+		}
+		List<Beer> beers = result.getData();
+		if(beers == null || beers.isEmpty()){
+			return null;
+		}
+		return beers;
 	}
 
 }
