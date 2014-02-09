@@ -17,6 +17,7 @@ package com.sosv.breweryDB.connector.service;
 
 import com.sosv.breweryDB.connector.service.beer.IBeerService;
 import com.sosv.breweryDB.connector.service.brewery.IBreweryService;
+import com.sosv.breweryDB.connector.service.search.ISearchService;
 
 /**
  * Interface for the breweryDB Service. 
@@ -24,6 +25,7 @@ import com.sosv.breweryDB.connector.service.brewery.IBreweryService;
  * @author Sven
  *
  */
-public interface IBreweryDBService extends IBeerService, IBreweryService{
+public interface IBreweryDBService extends IBeerService, IBreweryService, ISearchService
+{
 	
 }

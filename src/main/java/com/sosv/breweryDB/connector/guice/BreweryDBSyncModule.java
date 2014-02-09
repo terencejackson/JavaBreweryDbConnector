@@ -7,6 +7,8 @@ import com.sosv.breweryDB.connector.service.beer.BeerService;
 import com.sosv.breweryDB.connector.service.beer.IBeerService;
 import com.sosv.breweryDB.connector.service.brewery.BreweryService;
 import com.sosv.breweryDB.connector.service.brewery.IBreweryService;
+import com.sosv.breweryDB.connector.service.search.ISearchService;
+import com.sosv.breweryDB.connector.service.search.SearchService;
 
 public class BreweryDBSyncModule extends AbstractModule {
 
@@ -23,9 +25,10 @@ public class BreweryDBSyncModule extends AbstractModule {
 	protected void bindServices() {
 		bind(IBeerService.class).to(BeerService.class);
 		bind(IBreweryService.class).to(BreweryService.class);
+        bind(ISearchService.class).to(SearchService.class);
 		
 		// bind facade
-		bind(IBreweryDBService.class).to(BreweryDBService.class);
+		bind( IBreweryDBService.class ).to(BreweryDBService.class);
 	}
 
 
