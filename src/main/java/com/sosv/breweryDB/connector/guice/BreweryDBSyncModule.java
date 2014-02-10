@@ -25,10 +25,10 @@ public class BreweryDBSyncModule extends AbstractModule {
 	protected void bindServices() {
 		bind(IBeerService.class).to(BeerService.class);
 		bind(IBreweryService.class).to(BreweryService.class);
-        bind(ISearchService.class).to(SearchService.class);
+		bind(ISearchService.class).to(SearchService.class);
 		
 		// bind facade
-		bind( IBreweryDBService.class ).to(BreweryDBService.class);
+		bind(IBreweryDBService.class).to(BreweryDBService.class);
 	}
 
 

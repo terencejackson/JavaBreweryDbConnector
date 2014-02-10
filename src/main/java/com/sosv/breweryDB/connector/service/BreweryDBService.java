@@ -40,7 +40,7 @@ public class BreweryDBService implements IBeerService, IBreweryDBService, ISearc
 
 	private IBeerService beerService;
 	private IBreweryService breweryService;
-    private ISearchService searchService;
+	private ISearchService searchService;
 
 	/**
 	 * C'tor
@@ -51,11 +51,11 @@ public class BreweryDBService implements IBeerService, IBreweryDBService, ISearc
 	@Inject
 	public BreweryDBService(IBeerService beerService,
 			IBreweryService breweryService,
-            ISearchService searchService) {
+			ISearchService searchService) {
 		super();
 		this.beerService = beerService;
 		this.breweryService = breweryService;
-        this.searchService = searchService;
+		this.searchService = searchService;
 	}
 
 	/*
@@ -128,23 +128,23 @@ public class BreweryDBService implements IBeerService, IBreweryDBService, ISearc
         return searchService.searchBeers(query);
     }
 
-    @Override
-    public List<Beer> searchBeers(String query,
-                                  ISearchFilter filter)
-        throws ApiKeyNotFoundExeption {
-        return searchService.searchBeers(query, filter);
-    }
+	@Override
+	public List<Beer> searchBeers(String query,
+								  ISearchFilter filter)
+		throws ApiKeyNotFoundExeption {
+		return searchService.searchBeers(query, filter);
+	}
 
-    @Override
-    public List<Beer> searchBeersByUpc(String upc)
-        throws ApiKeyNotFoundExeption {
-        return searchService.searchBeersByUpc(upc);
-    }
+	@Override
+	public List<Beer> searchBeersByUpc(String upc)
+		throws ApiKeyNotFoundExeption {
+		return searchService.searchBeersByUpc(upc);
+	}
 
-    @Override
-    public List<Beer> searchBeersByUpc(String upc,
-                                       ISearchFilter filter)
-        throws ApiKeyNotFoundExeption {
-        return searchService.searchBeersByUpc(upc, filter);
-    }
+	@Override
+	public List<Beer> searchBeersByUpc(String upc,
+									   ISearchFilter filter)
+		throws ApiKeyNotFoundExeption {
+		return searchService.searchBeersByUpc(upc, filter);
+	}
 }

@@ -25,7 +25,6 @@ import com.sosv.breweryDB.connector.service.search.ISearchService;
  * @author Sven
  *
  */
-public interface IBreweryDBService extends IBeerService, IBreweryService, ISearchService
-{
+public interface IBreweryDBService extends IBeerService, IBreweryService, ISearchService{
 	
 }

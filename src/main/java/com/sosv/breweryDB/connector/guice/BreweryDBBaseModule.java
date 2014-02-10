@@ -60,7 +60,7 @@ public class BreweryDBBaseModule extends AbstractModule {
 	protected void bindResources() {
 		bind(IBeerResource.class).to(BeerResource.class);
 		bind(IBreweryResource.class).to(BreweryResource.class);
-        bind(ISearchResource.class).to(SearchResource.class);
+		bind(ISearchResource.class).to(SearchResource.class);
 	}
 
 	/**
