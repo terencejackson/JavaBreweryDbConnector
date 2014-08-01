@@ -23,6 +23,8 @@ import com.sosv.breweryDB.connector.service.resource.beer.BeerResource;
 import com.sosv.breweryDB.connector.service.resource.beer.IBeerResource;
 import com.sosv.breweryDB.connector.service.resource.brewery.BreweryResource;
 import com.sosv.breweryDB.connector.service.resource.brewery.IBreweryResource;
+import com.sosv.breweryDB.connector.service.resource.search.ISearchResource;
+import com.sosv.breweryDB.connector.service.resource.search.SearchResource;
 import com.sun.jersey.api.client.Client;
 
 /**
@@ -58,6 +60,7 @@ public class BreweryDBBaseModule extends AbstractModule {
 	protected void bindResources() {
 		bind(IBeerResource.class).to(BeerResource.class);
 		bind(IBreweryResource.class).to(BreweryResource.class);
+		bind(ISearchResource.class).to(SearchResource.class);
 	}
 
 	/**

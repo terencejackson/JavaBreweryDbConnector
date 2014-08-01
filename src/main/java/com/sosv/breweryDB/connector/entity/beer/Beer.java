@@ -15,66 +15,78 @@ import com.sosv.breweryDB.connector.entity.brewery.Brewery;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Beer{
-	
+
 	@XmlElement
    	private String abv;
-	
+
 	@XmlElement
    	private Available available;
-	
+
 	@XmlElement
    	private Number availableId;
-	
+
 	@XmlElement
    	private String createDate;
-	
+
 	@XmlElement
    	private String description;
-	
+
+	@XmlElement
+	private String foodPairings;
+
 	@XmlElement
    	private Glass glass;
-	
+
 	@XmlElement
    	private Number glasswareId;
-	
+
+	@XmlElement
+	private String ibu;
+
 	@XmlElement
    	private String id;
-	
+
 	@XmlElement
    	private String isOrganic;
-	
+
 	@XmlElement
    	private String name;
-	
+
+	@XmlElement
+	private Number originalGravity;
+
 	@XmlElement
    	private String status;
-	
+
 	@XmlElement
    	private String statusDisplay;
-	
+
 	@XmlElement
    	private Style style;
-	
+
 	@XmlElement
    	private Number styleId;
-	
+
+	@XmlElement
+	private String type;
+
 	@XmlElement
    	private String updateDate;
-	
+
 	@XmlElement
 	private List<Brewery> breweries;
-	
+
 	@XmlElement
 	private Images labels;
 
  	public List<Brewery> getBreweries() {
 		return breweries;
 	}
- 	
+
 	public void setBreweries(List<Brewery> breweries) {
 		this.breweries = breweries;
 	}
-	
+
 	public String getAbv(){
 		return this.abv;
 	}
@@ -105,6 +117,12 @@ public class Beer{
 	public void setDescription(String description){
 		this.description = description;
 	}
+	public String getFoodPairings() {
+		return this.foodPairings;
+	}
+	public void setFoodPairings(String foodPairings) {
+		this.foodPairings = foodPairings;
+	}
  	public Glass getGlass(){
 		return this.glass;
 	}
@@ -116,6 +134,12 @@ public class Beer{
 	}
 	public void setGlasswareId(Number glasswareId){
 		this.glasswareId = glasswareId;
+	}
+	public String getIbu() {
+		return this.ibu;
+	}
+	public void setIbu(String ibu) {
+		this.ibu = ibu;
 	}
  	public String getId(){
 		return this.id;
@@ -134,6 +158,12 @@ public class Beer{
 	}
 	public void setName(String name){
 		this.name = name;
+	}
+	public Number getOriginalGravity() {
+		return this.originalGravity;
+	}
+	public void setOriginalGravity(Number originalGravity) {
+		this.originalGravity = originalGravity;
 	}
  	public String getStatus(){
 		return this.status;
@@ -159,13 +189,19 @@ public class Beer{
 	public void setStyleId(Number styleId){
 		this.styleId = styleId;
 	}
+	public String getType() {
+		return this.type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
  	public String getUpdateDate(){
 		return this.updateDate;
 	}
 	public void setUpdateDate(String updateDate){
 		this.updateDate = updateDate;
 	}
-	
+
 	public Images getLabels() {
 		return labels;
 	}
@@ -176,13 +212,14 @@ public class Beer{
 
 	@Override
 	public String toString() {
-		return "Beer [abv=" + abv + ", available=" + available
-				+ ", availableId=" + availableId + ", createDate=" + createDate
-				+ ", description=" + description + ", glass=" + glass
+		return "Beer [abv=" + abv + ", ibu=" + ibu + " available=" + available
+				+ ", availableId=" + availableId + ", type=" + type
+				+ ", createDate=" + createDate + ", description=" + description
+				+ ", foodPairings=" + foodPairings + ", glass=" + glass
 				+ ", glasswareId=" + glasswareId + ", id=" + id
-				+ ", isOrganic=" + isOrganic + ", name=" + name + ", status="
-				+ status + ", statusDisplay=" + statusDisplay + ", style="
-				+ style + ", styleId=" + styleId + ", updateDate=" + updateDate
+				+ ", isOrganic=" + isOrganic + ", originalGravity=" + originalGravity
+				+ ", name=" + name + ", status=" + status + ", statusDisplay=" + statusDisplay
+				+ ", style=" + style + ", styleId=" + styleId + ", updateDate=" + updateDate
 				+ ", breweries=" + breweries + "]";
 	}
 }

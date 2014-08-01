@@ -27,6 +27,8 @@ import com.sosv.breweryDB.connector.service.exceptions.ApiKeyNotFoundExeption;
 import com.sosv.breweryDB.connector.service.resource.filter.beer.IBeerFilter;
 import com.sosv.breweryDB.connector.service.resource.filter.beer.IBeersFilter;
 import com.sosv.breweryDB.connector.service.resource.filter.brewery.IBreweriesFilter;
+import com.sosv.breweryDB.connector.service.resource.filter.search.ISearchFilter;
+import com.sosv.breweryDB.connector.service.search.ISearchService;
 
 /**
  * The service to get the data of the breweryDB service
@@ -34,10 +36,11 @@ import com.sosv.breweryDB.connector.service.resource.filter.brewery.IBreweriesFi
  * @author Sven
  * 
  */
-public class BreweryDBService implements IBreweryDBService {
+public class BreweryDBService implements IBeerService, IBreweryDBService, ISearchService {
 
 	private IBeerService beerService;
 	private IBreweryService breweryService;
+	private ISearchService searchService;
 
 	/**
 	 * C'tor
@@ -47,10 +50,12 @@ public class BreweryDBService implements IBreweryDBService {
 	 */
 	@Inject
 	public BreweryDBService(IBeerService beerService,
-			IBreweryService breweryService) {
+			IBreweryService breweryService,
+			ISearchService searchService) {
 		super();
 		this.beerService = beerService;
 		this.breweryService = breweryService;
+		this.searchService = searchService;
 	}
 
 	/*
@@ -117,4 +122,29 @@ public class BreweryDBService implements IBreweryDBService {
 		return breweryService.getBreweryById(id, filter);
 	}
 
+    @Override
+    public List<Beer> searchBeers(String query)
+        throws ApiKeyNotFoundExeption {
+        return searchService.searchBeers(query);
+    }
+
+	@Override
+	public List<Beer> searchBeers(String query,
+								  ISearchFilter filter)
+		throws ApiKeyNotFoundExeption {
+		return searchService.searchBeers(query, filter);
+	}
+
+	@Override
+	public List<Beer> searchBeersByUpc(String upc)
+		throws ApiKeyNotFoundExeption {
+		return searchService.searchBeersByUpc(upc);
+	}
+
+	@Override
+	public List<Beer> searchBeersByUpc(String upc,
+									   ISearchFilter filter)
+		throws ApiKeyNotFoundExeption {
+		return searchService.searchBeersByUpc(upc, filter);
+	}
 }
